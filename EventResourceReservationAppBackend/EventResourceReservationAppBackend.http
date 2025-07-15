@@ -1,0 +1,6 @@
+@EventResourceReservationAppBackend_HostAddress = http://localhost:5003
+
+GET {{EventResourceReservationAppBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
