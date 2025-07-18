@@ -77,7 +77,7 @@ Requisitos Previos
 ## 📖 Documentación Completa
 Para una guía de configuración más detallada, arquitectura, decisiones de diseño (ADRs), y más información técnica, visita la documentación centralizada del proyecto:
 
-## 🔗 [Documentación Completa del Backend](https://jose-angell.github.io/EventReservationAppDocs/backend/setup/)
+## 🔗 [Documentación Completa del Backend](https://jose-angell.github.io/EventResourceReservationAppDocs/docs/backend/setup)
 (Este enlace te llevará directamente a la sección de setup del backend en la documentación de Docusaurus.)
 
 
