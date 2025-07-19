@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventResourceReservationApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventResourceReservationApp.UnitTests", "EventResourceReservationApp.UnitTests\EventResourceReservationApp.UnitTests.csproj", "{F144C9F1-541C-4F52-90E6-4CBC13072089}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventResourceReservationApp.IntegrationTests", "EventResourceReservationApp.IntegrationTests\EventResourceReservationApp.IntegrationTests.csproj", "{606EB921-10CC-4302-91C9-5969FF27C02D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F144C9F1-541C-4F52-90E6-4CBC13072089}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F144C9F1-541C-4F52-90E6-4CBC13072089}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F144C9F1-541C-4F52-90E6-4CBC13072089}.Release|Any CPU.Build.0 = Release|Any CPU
+		{606EB921-10CC-4302-91C9-5969FF27C02D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{606EB921-10CC-4302-91C9-5969FF27C02D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{606EB921-10CC-4302-91C9-5969FF27C02D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{606EB921-10CC-4302-91C9-5969FF27C02D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
