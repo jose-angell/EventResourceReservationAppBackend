@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EventResourceReservationApp.Application\EventResourceReservationApp.Application.csproj" />
+    <ProjectReference Include="..\EventResourceReservationApp.Domain\EventResourceReservationApp.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
