@@ -28,7 +28,7 @@ bld/
 *.suo
 *.user
 *.log
-*.json
+
 *.pdb
 *.opendb
 *.opensdf
@@ -43,6 +43,8 @@ bld/
 *.designer.cs.dll
 *.designer.cs.pdb
 *.dbmdl
+
+
 
 # .NET Core
 project.lock.json
