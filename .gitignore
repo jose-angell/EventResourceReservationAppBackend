@@ -23,6 +23,27 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.log
+*.json
+*.pdb
+*.opendb
+*.opensdf
+*.sdf
+*.vstst
+*.vspscc
+*.tlog
+*.trx
+*.testresults
+*.vcxproj.user
+*.user
+*.designer.cs.dll
+*.designer.cs.pdb
+*.dbmdl
+
 # .NET Core
 project.lock.json
 project.fragment.lock.json
