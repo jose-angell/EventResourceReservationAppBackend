@@ -12,6 +12,36 @@ Esta aplicación permite a los usuarios reservar mobiliario, equipo de iluminaci
 * Gestión de Datos: Persistencia de datos a través de PostgreSQL y Entity Framework Core.
 * Documentación Interactiva: Integración con Swagger/OpenAPI para fácil exploración y prueba de endpoints.
 
+## Organizacion de proyecto
+```bash
+EventResourceReservationApp/  <-- Carpeta raíz del repositorio
+├── .vs/
+├── EventResourceReservationApp.sln
+├── .dockerignore
+├── .gitignore
+├── EventResourceReservationApp.Api/             <-- Tu proyecto actual, renombrado para claridad
+│   ├── Controllers/
+│   ├── Program.cs
+│   ├── EventResourceReservationApp.Api.csproj
+│   └── ...
+├── EventResourceReservationApp.Application/     <-- Lógica de aplicación, DTOs, interfaces de casos de uso
+│   ├── EventResourceReservationApp.Application.csproj
+│   └── ... (ej. Features/, Common/, Interfaces/)
+├── EventResourceReservationApp.Domain/          <-- Entidades, valores objeto, reglas de negocio principales
+│   ├── EventResourceReservationApp.Domain.csproj
+│   └── ... (ej. Entities/, Enums/, ValueObjects/)
+├── EventResourceReservationApp.Infrastructure/  <-- Implementaciones de EF Core, servicios externos
+│   ├── EventResourceReservationApp.Infrastructure.csproj
+│   └── ... (ej. Persistence/, Services/)
+├── EventResourceReservationApp.UnitTests/  <-- Pruebas unitarias
+│   ├── EventResourceReservationApp.UnitTests.csproj
+│   └── ... (ej. ResourceUnitTests/, ServicesUnitTests/)
+├── EventResourceReservationApp.IntegrationTests/  <-- Pruebas de integracion
+│   ├── EventResourceReservationApp.IntegrationTests.csproj
+│   └── ... (ej. CreteReservationIntegrationTests/, ServicesIntegrationTests/)
+├── LICENSE
+└── README.md
+```
 
 
  ## Tecnologías Clave
@@ -52,7 +82,7 @@ Requisitos Previos
     Navega a la carpeta principal del proyecto de API (donde está el archivo `.csproj`):
 
     ```bash
-    cd src/EventResourceReservationAppBackend.Api # Ajusta la ruta si es diferente
+    cd src/EventResourceReservationAppBackend.Infrastructure # Ajusta la ruta si es diferente
     ```
     Luego, aplica las migraciones de Entity Framework Core:
     
@@ -66,11 +96,11 @@ Requisitos Previos
     ```bash
     dotnet run
     ```
-    La API se iniciará, generalmente en `http://localhost:XXXX` (el puerto exacto se mostrará en tu terminal).
+    La API se iniciará, generalmente en `http://localhost:50003` (el puerto exacto se mostrará en tu terminal).
   
 5. **Accede a la Documentación de Swagger:**
     Una vez que la API esté corriendo, abre tu navegador y visita:
-    `http://localhost:XXXX/swagger` (reemplaza XXXX con el puerto de tu API).
+    `http://localhost:50003/swagger` (reemplaza XXXX con el puerto de tu API).
 
 
 
