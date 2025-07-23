@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventResourceReservationApp.Application\EventResourceReservationApp.Application.csproj" />
-    <ProjectReference Include="..\EventResourceReservationApp.Infrastructure\EventResourceReservationApp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
