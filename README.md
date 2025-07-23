@@ -4,18 +4,25 @@
 ---
 Esta aplicación permite a los usuarios reservar mobiliario, equipo de iluminación y otros recursos necesarios para realizar toda clase de eventos de forma rápida y eficiente, optimizando la gestión de disponibilidad para los administradores. Está dirigida a clientes que necesiten un proveedor integral para sus eventos y permite a los organizadores optimizar recursos y mejorar la experiencia del cliente final. 
 
-
-
 ## Características Principales
 * API RESTful: Proporciona endpoints para la gestión de entidades clave (recursos, reservas, usuarios, etc.).
 * Autenticación y Autorización: Seguridad robusta implementada con JWT y ASP.NET Core Identity.
 * Gestión de Datos: Persistencia de datos a través de PostgreSQL y Entity Framework Core.
 * Documentación Interactiva: Integración con Swagger/OpenAPI para fácil exploración y prueba de endpoints.
 
+
+
+ ## Tecnologías Clave
+* .NET 8: Framework de desarrollo principal.
+* PostgreSQL: Base de datos relacional.
+* Entity Framework Core: ORM para interacción con la base de datos.
+* JWT & ASP.NET Core Identity: Para seguridad de la API.
+* Docker & Docker Compose: Para un entorno de desarrollo de base de datos rápido.
+* Swagger/OpenAPI: Para documentación de la API.
+
 ## Organizacion de proyecto
 ```bash
 EventResourceReservationApp/  <-- Carpeta raíz del repositorio
-├── .vs/
 ├── EventResourceReservationApp.sln
 ├── .dockerignore
 ├── .gitignore
@@ -42,16 +49,6 @@ EventResourceReservationApp/  <-- Carpeta raíz del repositorio
 ├── LICENSE
 └── README.md
 ```
-
-
- ## Tecnologías Clave
-* .NET 8: Framework de desarrollo principal.
-* PostgreSQL: Base de datos relacional.
-* Entity Framework Core: ORM para interacción con la base de datos.
-* JWT & ASP.NET Core Identity: Para seguridad de la API.
-* Docker & Docker Compose: Para un entorno de desarrollo de base de datos rápido.
-* Swagger/OpenAPI: Para documentación de la API.
-
 
 
 ## 🚀 Inicio Rápido (Setup Local)
