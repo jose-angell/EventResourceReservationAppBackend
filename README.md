@@ -79,7 +79,7 @@ Requisitos Previos
     Navega a la carpeta principal del proyecto de API (donde está el archivo `.csproj`):
 
     ```bash
-    cd src/EventResourceReservationAppBackend.Infrastructure # Ajusta la ruta si es diferente
+    cd src/EventResourceReservationApp.Infrastructure # Ajusta la ruta si es diferente
     ```
     Luego, aplica las migraciones de Entity Framework Core:
     
@@ -88,7 +88,7 @@ Requisitos Previos
     ```
     
 4. **Ejecuta la Aplicación API:**
-    Desde la misma carpeta (`src/EventResourceReservationAppBackend.Api`):
+    Desde la misma carpeta (`src/EventResourceReservationApp.Api`):
 
     ```bash
     dotnet run
