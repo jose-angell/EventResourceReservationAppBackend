@@ -14,7 +14,6 @@ services:
       - "5432:5432" # Mapea el puerto del contenedor (5432) al puerto de tu máquina local (5432)
     volumes:
       # Persistencia de datos: Evita perder tus datos si el contenedor se elimina
-      # 'pgdata' es un volumen con nombre que Docker gestiona.
       - pgdata:/var/lib/postgresql/data
     healthcheck: # Opcional: Para verificar que la DB esté lista antes de que otros servicios se conecten
       test: ["CMD-SHELL", "pg_isready -U ReservationApp_user -d ReservationApp"]
@@ -28,19 +27,12 @@ services:
       context: . # El contexto es la raíz de tu solución Docker Compose
       dockerfile: ./EventResourceReservationApp.Api/Dockerfile # Ruta a tu Dockerfile de la API
     ports:
-      - "8080:8080" # Mapea el puerto de tu aplicación (ej. 8080) al puerto de tu máquina local
+      - "8080:8080" # Mapea el puerto de tu aplicación al puerto de tu máquina local
     # environment:
-      # Inyecta la cadena de conexión desde appsettings.json
-      # No necesitas redefinirla aquí si ya está en appsettings.json.
-      # Docker Compose se encarga de la resolución de nombres entre servicios.
-      # ASÍ QUE, ESTA SECCIÓN DE ENTORNO NO ES ESTRICTAMENTE NECESARIA SI USAS appsettings.json
-      # Pero si quisieras inyectarla directamente para override:
       # ConnectionStrings__DefaultConnection: "Host=db_postgres;Port=5432;Database=eventres_db;Username=eventres_user;Password=your_strong_password"
     depends_on:
       db_postgres:
         condition: service_healthy # Asegura que la app espere a que la DB esté saludable
-    # Opcional: Si quieres que los cambios en el código se reflejen sin reconstruir la imagen
-     # Los volúmenes para desarrollo son opcionales, pero si los usas, ajusta la ruta:
     # volumes:
     #   - ./EventResourceReservationApp.Api:/app # Esto asume que el Dockerfile está en la raíz, no en una subcarpeta
     #   - ~/.nuget/packages:/root/.nuget/packages
