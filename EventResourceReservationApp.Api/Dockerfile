@@ -13,6 +13,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["EventResourceReservationApp.Api/EventResourceReservationApp.Api.csproj", "EventResourceReservationApp.Api/"]
+COPY ["EventResourceReservationApp.Application/EventResourceReservationApp.Application.csproj", "EventResourceReservationApp.Application/"]
+COPY ["EventResourceReservationApp.Domain/EventResourceReservationApp.Domain.csproj", "EventResourceReservationApp.Domain/"]
+COPY ["EventResourceReservationApp.Infrastructure/EventResourceReservationApp.Infrastructure.csproj", "EventResourceReservationApp.Infrastructure/"]
+
 RUN dotnet restore "./EventResourceReservationApp.Api/EventResourceReservationApp.Api.csproj"
 COPY . .
 WORKDIR "/src/EventResourceReservationApp.Api"

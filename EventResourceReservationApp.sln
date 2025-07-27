@@ -15,6 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventResourceReservationApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventResourceReservationApp.IntegrationTests", "EventResourceReservationApp.IntegrationTests\EventResourceReservationApp.IntegrationTests.csproj", "{606EB921-10CC-4302-91C9-5969FF27C02D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose", "docker-compose", "{231AE8E5-68A1-4F3E-A126-67D65959BEA7}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
