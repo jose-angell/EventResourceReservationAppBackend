@@ -28,8 +28,8 @@ services:
       dockerfile: ./EventResourceReservationApp.Api/Dockerfile # Ruta a tu Dockerfile de la API
     ports:
       - "8080:8080" # Mapea el puerto de tu aplicación al puerto de tu máquina local
-    # environment:
-      # ConnectionStrings__DefaultConnection: "Host=db_postgres;Port=5432;Database=eventres_db;Username=eventres_user;Password=your_strong_password"
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=db_postgres;Port=5432;Database=ReservationApp;Username=ReservationApp_user;Password=password123"
     depends_on:
       db_postgres:
         condition: service_healthy # Asegura que la app espere a que la DB esté saludable
