@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EventResourceReservationApp.Application.Repositories
 {
-    public interface ICategoriaRepository: IRepository<Category>
+    public interface ICategoryRepository: IRepository<Category>
     {
         Task<Category> GetByIdAsync(int id);
         Task UpdateAsync(Category category);
