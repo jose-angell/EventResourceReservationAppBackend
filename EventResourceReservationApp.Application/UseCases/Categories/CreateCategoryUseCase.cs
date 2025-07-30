@@ -19,13 +19,14 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
         }
         public async Task<CategoryResponse> ExecuteAsync(CreateCategoryRequest request)
         {
-            var newCategory = new Category(request.Name, request.Description, request.CreatedByUserId);
-
             var existingCategory = await _unitOfWork.Categories.GetFirstOrDefaultAsync(c => c.Name == request.Name);
             if (existingCategory != null)
             {
                 throw new ArgumentException($"Ya existe una categoría con el nombre '{request.Name}'.", nameof(request.Name));
             }
+
+            var newCategory = new Category(request.Name, request.Description, request.CreatedByUserId);
+
             await _unitOfWork.Categories.AddAsync(newCategory);
             await _unitOfWork.SaveAsync();
             return new CategoryResponse
