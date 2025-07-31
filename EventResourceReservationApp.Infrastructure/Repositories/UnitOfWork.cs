@@ -1,14 +1,11 @@
-﻿using EventResourceReservationApp.Application.Repositories;
+﻿using EventResourceReservationApp.Application.Common;
+using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventResourceReservationApp.Infrastructure.Repositories
 {
-    public class UnitOfWork: IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
         public ICategoryRepository Categories { get; private set; }
@@ -19,7 +16,20 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
         }
         public async Task SaveAsync()
         {
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException dbEx)
+            {
+                //TODO: _logger.LogError(ex, "Ocurrió un error de actualización de base de datos durante SaveAsync.");
+                throw new PersistenceException("Un error de base de datos impidió guardar los cambios.", dbEx);
+            }
+            catch (Exception ex)
+            {
+                //TODO: _logger.LogError(ex, "Ocurrió un error inesperado durante SaveAsync.");
+                throw new PersistenceException("Ocurrió un error inesperado al persistir los cambios.", ex);
+            }
         }
         public void Dispose()
         {
