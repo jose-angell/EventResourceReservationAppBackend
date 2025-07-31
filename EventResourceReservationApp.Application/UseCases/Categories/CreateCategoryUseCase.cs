@@ -29,7 +29,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 newCategory = new Category(request.Name, request.Description, request.CreatedByUserId);
 
             }
-            catch (AbandonedMutexException argEx)
+            catch (ArgumentException argEx)
             {
                 //TODO: _logger.LogWarning(argEx, "Fallo al crear categoría debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
                 return OperationResult<CategoryResponse>.Failure(argEx.Message,
