@@ -28,25 +28,6 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             {
                 newCategory = new Category(request.Name, request.Description, request.CreatedByUserId);
 
-            }
-            catch (ArgumentException argEx)
-            {
-                //TODO: _logger.LogWarning(argEx, "Fallo al crear categoría debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
-                return OperationResult<CategoryResponse>.Failure(argEx.Message,
-                    "La operación de creación falló debido a una entrada inválida."
-                );
-            }
-            catch (Exception ex)
-            {
-                //TODO: _logger.LogError(ex, "Ocurrió un error inesperado al instanciar la Categoría para la creación.");
-                return OperationResult<CategoryResponse>.Failure(
-                    "Ocurrió un error inesperado al preparar la categoría.",
-                    "La operación de creación falló debido a un error interno."
-                );
-            }
-            try
-            {
-
                 await _unitOfWork.Categories.AddAsync(newCategory);
                 await _unitOfWork.SaveAsync();
                 var categoryDto = new CategoryResponse
@@ -58,6 +39,13 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                     CreatedByUserId = newCategory.CreatedByUserId
                 };
                 return OperationResult<CategoryResponse>.Success(categoryDto, "Categoría creada exitosamente.");
+            }
+            catch (ArgumentException argEx)
+            {
+                //TODO: _logger.LogWarning(argEx, "Fallo al crear categoría debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
+                return OperationResult<CategoryResponse>.Failure(argEx.Message,
+                    "La operación de creación falló debido a una entrada inválida."
+                );
             }
             catch (PersistenceException pEx)
             {
