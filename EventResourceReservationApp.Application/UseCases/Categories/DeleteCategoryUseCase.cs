@@ -1,10 +1,5 @@
 ﻿using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventResourceReservationApp.Application.UseCases.Categories
 {
@@ -20,7 +15,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             try
             {
                 var deleteCategory = await _unitOfWork.Categories.GetByIdAsync(categoryId);
-                if(deleteCategory == null)
+                if (deleteCategory == null)
                 {
                     //TODO: _logger.LogWarning("Fallo al eliminar: No se encontró una categoría con el ID '{CategoryId}'.", request.Id);
                     return OperationResult.Failure(
@@ -35,14 +30,14 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 await _unitOfWork.SaveAsync();
                 return OperationResult.Success("Categoría eliminada exitosamente.");
             }
-            catch(PersistenceException pEx)
+            catch (PersistenceException pEx)
             {
                 //TODO: _logger.LogError(pEx, "Fallo al actualizar la categoría debido a un error de persistencia.");
                 return OperationResult.Failure("No se pudo eliminar la categoría de la base de datos.",
                     "La operación de eliminación falló debido a un problema de almacenamiento de datos."
                 );
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //TODO: _logger.LogError(ex, "Ocurrió un error inesperado durante la eliminación de la categoría en el caso de uso.");
                 return OperationResult.Failure("Ocurrió un error interno imprevisto.",

@@ -2,12 +2,7 @@
 using EventResourceReservationApp.Application.DTOs.Categories;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventResourceReservationApp.Application.UseCases.Categories
 {
@@ -64,7 +59,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 });
                 return OperationResult<IEnumerable<CategoryResponse>>.Success(categoryResponses, "Categorías obtenidas exitosamente.");
             }
-            catch(PersistenceException pEx)
+            catch (PersistenceException pEx)
             {
                 //TODO: _logger.LogError(pEx, "Fallo al obtener las categorías debido a un error de persistencia.");
                 return OperationResult<IEnumerable<CategoryResponse>>.Failure(
@@ -72,7 +67,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                     "La operación de lectura falló debido a un problema de almacenamiento de datos."
                 );
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //TODO: _logger.LogError(ex, "Ocurrió un error inesperado durante la obtención de las categorías en el caso de uso.");
                 return OperationResult<IEnumerable<CategoryResponse>>.Failure(
