@@ -3,6 +3,7 @@ using EventResourceReservationApp.Infrastructure.Data;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Api;
 using EventResourceReservationApp.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+//Captura las excepciones no manejadas y las redirige a un middleware de manejo de excepciones
+app.UseExceptionHandler("/error");
+app.Map("/error", (HttpContext context) =>
+{
+    var exceptionHandler = context.Features.Get<IExceptionHandlerFeature>();
+    //TODO: Logear la excepcion
+    return Results.Problem(
+        statusCode: StatusCodes.Status500InternalServerError,
+        title: "Error inesperado del servidor",
+        detail: exceptionHandler?.Error.Message);
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
