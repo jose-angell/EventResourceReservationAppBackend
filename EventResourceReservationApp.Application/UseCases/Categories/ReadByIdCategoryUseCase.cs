@@ -21,6 +21,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                     //TODO: _logger.LogWarning("Fallo al consultar: No se encontró una categoría con el ID '{CategoryId}'.", id);
                     return OperationResult<CategoryResponse>.Failure(
                             $"No se encontró una categoría con el ID '{id}'.",
+                            "NotFound",
                             "La operación de consulta falló porque la categoría no existe."
                     );
                 }

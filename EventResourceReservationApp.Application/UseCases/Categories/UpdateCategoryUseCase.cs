@@ -22,6 +22,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 //TODO: _logger.LogWarning("Fallo al actualizar: No se encontró una categoría con el ID '{CategoryId}'.", request.Id);
                 return OperationResult.Failure(
                         $"No se encontró una categoría con el ID '{request.Id}'.",
+                        "NotFound",
                         "La operación de actualización falló porque la categoría no existe."
                 );
             }
@@ -36,6 +37,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                         ///TODO: _logger.LogWarning("Fallo al actualizar categoría: Ya existe otra categoría con el nombre '{CategoryName}'.", request.Name);
                         return OperationResult.Failure(
                             $"Ya existe una categoría con el nombre '{request.Name}'.",
+                            "DuplicateName",
                             "La operación de actualización falló debido a una duplicación de nombre."
                         );
                     }
@@ -50,6 +52,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             {
                 //TODO: _logger.LogWarning(argEx, "Fallo al actualizar categoría debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
                 return OperationResult.Failure(argEx.Message,
+                    "InvalidInput",
                     "La operación de actualización falló debido a una entrada inválida."
                 );
             }

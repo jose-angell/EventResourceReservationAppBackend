@@ -1,4 +1,5 @@
-﻿using EventResourceReservationApp.Application.DTOs.Categories;
+﻿using EventResourceReservationApp.Application.Common;
+using EventResourceReservationApp.Application.DTOs.Categories;
 using EventResourceReservationApp.Application.UseCases.Categories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,24 +38,36 @@ namespace EventResourceReservationApp.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _createCategoryUseCase.ExecuteAsync(request);
+            OperationResult<CategoryResponse> result = await _createCategoryUseCase.ExecuteAsync(request);
             if (result.IsSuccess)
             {
-                return Ok(new
+                return CreatedAtAction(nameof(ReadByIdCategory), new { id = result.Data.Id }, result.Data);
+            }
+           
+            if (result.ErrorCode == "DuplicateName")
+            {
+                return Conflict(new ProblemDetails
                 {
-                    Message = result.Message,
-                    Category = result.Data
+                    Status = StatusCodes.Status409Conflict,
+                    Title = "Conflicto al crear la categoría",
+                    Detail = result.Message
                 });
             }
-            else
+            if(result.ErrorCode == "InvalidInput")
             {
                 return BadRequest(new ProblemDetails
                 {
                     Status = StatusCodes.Status400BadRequest,
-                    Title = "Error en la operación",
+                    Title = "Entrada inválida",
                     Detail = result.Message
                 });
             }
+            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
+            {
+                Status = StatusCodes.Status500InternalServerError,
+                Title = "Error inesperado al crear la categoría.",
+                Detail = "Ocurrió un error inesperado en el servidor."
+            });
         }
         [HttpGet]
         public async Task<IActionResult> ReadAllCategory([FromQuery] ReadAllCategoryRequest request)
@@ -62,40 +75,47 @@ namespace EventResourceReservationApp.Api.Controllers
             var result = await _readAllCategory.ExecuteAsync(request);
             if (result.IsSuccess)
             {
-                return Ok(new
-                {
-                    Message = result.Message,
-                    Categories = result.Data
-                });
+                return Ok(result.Data);
             }
-            return BadRequest(new ProblemDetails
+            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
             {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Error en la operación",
-                Detail = result.Message
+                Status = StatusCodes.Status500InternalServerError,
+                Title = "Error inesperado al consultar las categorías.",
+                Detail = "Ocurrió un error inesperado en el servidor."
             });
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> ReadByIdCategory(int id = 0)
+        public async Task<IActionResult> ReadByIdCategory([FromRoute] int id)
         {
+            
             if (id <= 0)
             {
-                return BadRequest(id);
+                return BadRequest(new ProblemDetails
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Entrada inválida",
+                    Detail = "El ID de la categoría debe ser mayor que cero."
+                });
             }
             var result = await _readByIdCategory.ExecuteAsync(id);
             if (result.IsSuccess)
             {
-                return Ok(new
+                return Ok(result.Data);
+            }
+            if (result.ErrorCode == "NotFound")
+            {
+                return NotFound(new ProblemDetails
                 {
-                    Message = result.Message,
-                    Category = result.Data
+                    Status = StatusCodes.Status404NotFound,
+                    Title = "Recurso no encontrado",
+                    Detail = result.Message
                 });
             }
-            return BadRequest(new ProblemDetails
+            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
             {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Error en la operación",
-                Detail = result.Message
+                Status = StatusCodes.Status500InternalServerError,
+                Title = "Error inesperado al consultar la categoría.",
+                Detail = "Ocurrió un error inesperado en el servidor."
             });
         }
         [HttpGet("list")]
@@ -104,19 +124,15 @@ namespace EventResourceReservationApp.Api.Controllers
             var result = await _listAllCategory.ExecuteAsync();
             if (result.IsSuccess)
             {
-                return Ok(new
-                {
-                    Message = result.Message,
-                    Categories = result.Data
-                });
+                return Ok(result.Data);
             }
-            return BadRequest(new ProblemDetails
+            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
             {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Error en la operación",
-                Detail = result.Message
+                Status = StatusCodes.Status500InternalServerError,
+                Title = "Error inesperado al consultar las categorías.",
+                Detail = "Ocurrió un error inesperado en el servidor."
             });
-        }
+        }  
         [HttpPut]
         public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryRequest request)
         {
@@ -127,41 +143,74 @@ namespace EventResourceReservationApp.Api.Controllers
             var result = await _UpdateCategoryUseCase.ExecuteAsync(request);
             if (result.IsSuccess)
             {
-                return Ok(new
+                return NoContent();
+            }
+            if (result.ErrorCode == "DuplicateName")
+            {
+                return Conflict(new ProblemDetails
                 {
-                    Message = result.Message
+                    Status = StatusCodes.Status409Conflict,
+                    Title = "Conflicto al crear la categoría",
+                    Detail = result.Message
                 });
             }
-            else
+            if (result.ErrorCode == "InvalidInput")
             {
                 return BadRequest(new ProblemDetails
                 {
                     Status = StatusCodes.Status400BadRequest,
-                    Title = "Error en la operación",
+                    Title = "Entrada inválida",
                     Detail = result.Message
                 });
             }
+            if (result.ErrorCode == "NotFound")
+            {
+                return NotFound(new ProblemDetails
+                {
+                    Status = StatusCodes.Status404NotFound,
+                    Title = "Recurso no encontrado",
+                    Detail = result.Message
+                });
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
+            {
+                Status = StatusCodes.Status500InternalServerError,
+                Title = "Error inesperado al actualizar la categoría.",
+                Detail = "Ocurrió un error inesperado en el servidor."
+            });
+
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategory([FromRoute] int id)
         {
             if (id <= 0)
             {
-                return BadRequest("El ID de la categoría debe ser mayor que cero.");
+                return BadRequest(new ProblemDetails
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Entrada inválida",
+                    Detail = "El ID de la categoría debe ser mayor que cero."
+                });
             }
             var result = await _deleteCategory.ExecuteAsync(id);
             if (result.IsSuccess)
             {
-                return Ok(new
+                return NoContent();
+            }
+            if (result.ErrorCode == "NotFound")
+            {
+                return NotFound(new ProblemDetails
                 {
-                    Message = "Categoría eliminada exitosamente."
+                    Status = StatusCodes.Status404NotFound,
+                    Title = "Recurso no encontrado",
+                    Detail = result.Message
                 });
             }
-            return BadRequest(new ProblemDetails
+            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
             {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Error en la operación",
-                Detail = result.Message
+                Status = StatusCodes.Status500InternalServerError,
+                Title = "Error inesperado al eliminar la categoría.",
+                Detail = "Ocurrió un error inesperado en el servidor."
             });
         }
     }

@@ -20,6 +20,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                     //TODO: _logger.LogWarning("Fallo al eliminar: No se encontró una categoría con el ID '{CategoryId}'.", request.Id);
                     return OperationResult.Failure(
                             $"No se encontró una categoría con el ID '{categoryId}'.",
+                            "NotFound",
                             "La operación de eliminación falló porque la categoría no existe."
                     );
                 }

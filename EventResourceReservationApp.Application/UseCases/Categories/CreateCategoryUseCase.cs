@@ -20,6 +20,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 //TODO: _logger.LogWarning("Fallo al crear categoría: Ya existe una categoría con el nombre '{CategoryName}'.", request.Name);
                 return OperationResult<CategoryResponse>.Failure(
                     $"Ya existe una categoría con el nombre '{request.Name}'.",
+                    "DuplicateName",
                     "La operación de creación falló debido a una regla de negocio."
                 );
             }
@@ -44,6 +45,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             {
                 //TODO: _logger.LogWarning(argEx, "Fallo al crear categoría debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
                 return OperationResult<CategoryResponse>.Failure(argEx.Message,
+                    "InvalidInput",
                     "La operación de creación falló debido a una entrada inválida."
                 );
             }
