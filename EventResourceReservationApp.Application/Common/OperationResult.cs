@@ -11,15 +11,17 @@ namespace EventResourceReservationApp.Application.Common
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
         public IEnumerable<string> Errors { get; set; }
+        public string ErrorCode { get; set; }
 
-        protected OperationResult(bool isSuccess, string message, IEnumerable<string> errors = null)
+        protected OperationResult(bool isSuccess, string message, string errorCodde = null, IEnumerable<string> errors = null)
         {
             IsSuccess = isSuccess;
             Message = message;
+            ErrorCode = errorCodde;
             Errors  = errors ?? Enumerable.Empty<string>();
         }
         public static OperationResult Success(string message = "Operación exitosa.") => new OperationResult(true, message);
-        public static OperationResult Failure(string error, string message = "La operación falló.") => new OperationResult(false, message, new[] {error});
-        public static OperationResult Failure(IEnumerable<string> errors, string message = "La operación falló.") => new OperationResult(false, message, errors);
+        public static OperationResult Failure(string error, string errorCode, string message = "La operación falló.") => new OperationResult(false, message, errorCode, new[] {error});
+        public static OperationResult Failure(IEnumerable<string> errors, string errorCode, string message = "La operación falló.") => new OperationResult(false, message, errorCode, errors);
     }
 }
