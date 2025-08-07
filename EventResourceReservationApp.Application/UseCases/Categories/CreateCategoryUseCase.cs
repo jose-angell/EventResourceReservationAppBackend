@@ -20,8 +20,8 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 //TODO: _logger.LogWarning("Fallo al crear categoría: Ya existe una categoría con el nombre '{CategoryName}'.", request.Name);
                 return OperationResult<CategoryResponse>.Failure(
                     $"Ya existe una categoría con el nombre '{request.Name}'.",
-                    "DuplicateName",
-                    "La operación de creación falló debido a una regla de negocio."
+                    "Conflict",
+                    $"La operación de actualización falló debido a una duplicación de nombre '{request.Name}'."
                 );
             }
             Category newCategory;

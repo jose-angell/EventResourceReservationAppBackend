@@ -37,8 +37,8 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                         ///TODO: _logger.LogWarning("Fallo al actualizar categoría: Ya existe otra categoría con el nombre '{CategoryName}'.", request.Name);
                         return OperationResult.Failure(
                             $"Ya existe una categoría con el nombre '{request.Name}'.",
-                            "DuplicateName",
-                            "La operación de actualización falló debido a una duplicación de nombre."
+                            "Conflict",
+                            $"La operación de actualización falló debido a una duplicación de nombre '{request.Name}'."
                         );
                     }
                 }

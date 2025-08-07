@@ -1,4 +1,5 @@
-﻿using EventResourceReservationApp.Application.Common;
+﻿using EventResourceReservationApp.Api.Helpers;
+using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.DTOs.Categories;
 using EventResourceReservationApp.Application.UseCases.Categories;
 using Microsoft.AspNetCore.Mvc;
@@ -43,31 +44,7 @@ namespace EventResourceReservationApp.Api.Controllers
             {
                 return CreatedAtAction(nameof(ReadByIdCategory), new { id = result.Data.Id }, result.Data);
             }
-           
-            if (result.ErrorCode == "DuplicateName")
-            {
-                return Conflict(new ProblemDetails
-                {
-                    Status = StatusCodes.Status409Conflict,
-                    Title = "Conflicto al crear la categoría",
-                    Detail = result.Message
-                });
-            }
-            if(result.ErrorCode == "InvalidInput")
-            {
-                return BadRequest(new ProblemDetails
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Title = "Entrada inválida",
-                    Detail = result.Message
-                });
-            }
-            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
-            {
-                Status = StatusCodes.Status500InternalServerError,
-                Title = "Error inesperado al crear la categoría.",
-                Detail = "Ocurrió un error inesperado en el servidor."
-            });
+            return this.HandleOperationError(result);
         }
         [HttpGet]
         public async Task<IActionResult> ReadAllCategory([FromQuery] ReadAllCategoryRequest request)
@@ -77,12 +54,7 @@ namespace EventResourceReservationApp.Api.Controllers
             {
                 return Ok(result.Data);
             }
-            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
-            {
-                Status = StatusCodes.Status500InternalServerError,
-                Title = "Error inesperado al consultar las categorías.",
-                Detail = "Ocurrió un error inesperado en el servidor."
-            });
+            return this.HandleOperationError(result);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> ReadByIdCategory([FromRoute] int id)
@@ -102,21 +74,7 @@ namespace EventResourceReservationApp.Api.Controllers
             {
                 return Ok(result.Data);
             }
-            if (result.ErrorCode == "NotFound")
-            {
-                return NotFound(new ProblemDetails
-                {
-                    Status = StatusCodes.Status404NotFound,
-                    Title = "Recurso no encontrado",
-                    Detail = result.Message
-                });
-            }
-            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
-            {
-                Status = StatusCodes.Status500InternalServerError,
-                Title = "Error inesperado al consultar la categoría.",
-                Detail = "Ocurrió un error inesperado en el servidor."
-            });
+            return this.HandleOperationError(result);
         }
         [HttpGet("list")]
         public async Task<IActionResult> ListAllCategory()
@@ -126,12 +84,7 @@ namespace EventResourceReservationApp.Api.Controllers
             {
                 return Ok(result.Data);
             }
-            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
-            {
-                Status = StatusCodes.Status500InternalServerError,
-                Title = "Error inesperado al consultar las categorías.",
-                Detail = "Ocurrió un error inesperado en el servidor."
-            });
+            return this.HandleOperationError(result);
         }  
         [HttpPut]
         public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryRequest request)
@@ -145,40 +98,7 @@ namespace EventResourceReservationApp.Api.Controllers
             {
                 return NoContent();
             }
-            if (result.ErrorCode == "DuplicateName")
-            {
-                return Conflict(new ProblemDetails
-                {
-                    Status = StatusCodes.Status409Conflict,
-                    Title = "Conflicto al crear la categoría",
-                    Detail = result.Message
-                });
-            }
-            if (result.ErrorCode == "InvalidInput")
-            {
-                return BadRequest(new ProblemDetails
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Title = "Entrada inválida",
-                    Detail = result.Message
-                });
-            }
-            if (result.ErrorCode == "NotFound")
-            {
-                return NotFound(new ProblemDetails
-                {
-                    Status = StatusCodes.Status404NotFound,
-                    Title = "Recurso no encontrado",
-                    Detail = result.Message
-                });
-            }
-            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
-            {
-                Status = StatusCodes.Status500InternalServerError,
-                Title = "Error inesperado al actualizar la categoría.",
-                Detail = "Ocurrió un error inesperado en el servidor."
-            });
-
+            return this.HandleOperationError(result);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory([FromRoute] int id)
@@ -197,21 +117,7 @@ namespace EventResourceReservationApp.Api.Controllers
             {
                 return NoContent();
             }
-            if (result.ErrorCode == "NotFound")
-            {
-                return NotFound(new ProblemDetails
-                {
-                    Status = StatusCodes.Status404NotFound,
-                    Title = "Recurso no encontrado",
-                    Detail = result.Message
-                });
-            }
-            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
-            {
-                Status = StatusCodes.Status500InternalServerError,
-                Title = "Error inesperado al eliminar la categoría.",
-                Detail = "Ocurrió un error inesperado en el servidor."
-            });
+            return this.HandleOperationError(result);
         }
     }
 }
