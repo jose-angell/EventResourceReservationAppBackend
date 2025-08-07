@@ -86,9 +86,18 @@ namespace EventResourceReservationApp.Api.Controllers
             }
             return this.HandleOperationError(result);
         }  
-        [HttpPut]
-        public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryRequest request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCategory([FromRoute] int id, [FromBody] UpdateCategoryRequest request)
         {
+            if (id != request.Id)
+            {
+                return BadRequest(new ProblemDetails
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Inconsistencia de ID",
+                    Detail = "El ID en la URL no coincide con el ID en el cuerpo de la solicitud."
+                });
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
