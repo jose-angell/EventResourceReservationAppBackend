@@ -15,7 +15,7 @@
         }
         public Category(string name, string description, Guid createdByUserId)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Name cannot be null or empty.", nameof(name));
             }
@@ -34,7 +34,7 @@
         }
         public void Update(string name, string description)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Name cannot be null or empty.", nameof(name));
             }
