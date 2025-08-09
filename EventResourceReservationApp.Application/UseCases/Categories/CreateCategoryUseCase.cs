@@ -62,7 +62,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             {
                 //TODO: _logger.LogError(ex, "Ocurrió un error inesperado durante la creación de la categoría en el caso de uso.");
                 return OperationResult<CategoryResponse>.Failure("Ocurrió un error interno imprevisto.",
-                    "PersistenceError",
+                    "UnexpectedError",
                     "La operación de creación falló debido a un problema inesperado."
                 );
             }
