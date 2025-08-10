@@ -29,6 +29,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 //TODO: _logger.LogError(pEx, "Fallo al obtener las categorías debido a un error de persistencia.");
                 return OperationResult<IEnumerable<CategoryListItemResponse>>.Failure(
                     "No se pudieron obtener las categorías de la base de datos.",
+                    "PersistenceError",
                     "La operación de lectura falló debido a un problema de almacenamiento de datos."
                 );
             }
@@ -37,6 +38,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 //TODO: _logger.LogError(ex, "Ocurrió un error inesperado durante la obtención de las categorías en el caso de uso.");
                 return OperationResult<IEnumerable<CategoryListItemResponse>>.Failure(
                     "Ocurrió un error interno imprevisto.",
+                    "UnexpectedError",
                     "La operación de lectura falló debido a un problema inesperado."
                 );
             }
