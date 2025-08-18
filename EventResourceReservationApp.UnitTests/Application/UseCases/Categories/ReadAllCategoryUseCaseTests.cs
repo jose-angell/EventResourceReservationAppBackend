@@ -3,6 +3,7 @@ using EventResourceReservationApp.Application.DTOs.Categories;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Application.UseCases.Categories;
 using EventResourceReservationApp.Domain;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Categories
         private readonly Mock<IUnitOfWork> _mockIunitOfWork;
         private readonly Mock<ICategoryRepository> _mockCategoryRepository;
         private readonly ReadAllCategoryUseCase _useCase;
+        private readonly Mock<ILogger<ReadAllCategoryUseCase>> _mockLogger;
         public ReadAllCategoryUseCaseTests()
         {
             _mockCategoryRepository = new Mock<ICategoryRepository>();
             _mockIunitOfWork = new Mock<IUnitOfWork>();
+            _mockLogger = new Mock<ILogger<ReadAllCategoryUseCase>>();
             _mockIunitOfWork.Setup(u => u.Categories).Returns(_mockCategoryRepository.Object);
-            _useCase = new ReadAllCategoryUseCase(_mockIunitOfWork.Object);
+            _useCase = new ReadAllCategoryUseCase(_mockIunitOfWork.Object, _mockLogger.Object);
         }
         // Datos de prueba para simular la base de datos
         private List<Category> GetTestCategories()
