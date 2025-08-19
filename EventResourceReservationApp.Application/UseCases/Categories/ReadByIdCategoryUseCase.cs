@@ -1,15 +1,18 @@
 ﻿using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.DTOs.Categories;
 using EventResourceReservationApp.Application.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace EventResourceReservationApp.Application.UseCases.Categories
 {
     public class ReadByIdCategoryUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ReadByIdCategoryUseCase(IUnitOfWork unitOfWork)
+        private readonly ILogger<ReadByIdCategoryUseCase> _logger;
+        public ReadByIdCategoryUseCase(IUnitOfWork unitOfWork, ILogger<ReadByIdCategoryUseCase> logger )
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
         public async Task<OperationResult<CategoryResponse>> ExecuteAsync(int id)
         {
@@ -18,7 +21,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 var caategory = await _unitOfWork.Categories.GetByIdAsync(id);
                 if (caategory == null)
                 {
-                    //TODO: _logger.LogWarning("Fallo al consultar: No se encontró una categoría con el ID '{CategoryId}'.", id);
+                    _logger.LogWarning("Fallo al consultar: No se encontró una categoría con el ID '{CategoryId}'.", id);
                     return OperationResult<CategoryResponse>.Failure(
                             $"No se encontró una categoría con el ID '{id}'.",
                             "NotFound",
@@ -37,7 +40,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (PersistenceException pEx)
             {
-                //TODO: _logger.LogError(pEx, "Fallo al obtener la categoría {CategoryId} debido a un error de persistencia.", id);
+                _logger.LogError(pEx, "Fallo al obtener la categoría {CategoryId} debido a un error de persistencia.", id);
                 return OperationResult<CategoryResponse>.Failure(
                     "No se pudo obtener la categoría de la base de datos.",
                     "PersistenceError",
@@ -46,7 +49,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (Exception ex)
             {
-                //TODO: _logger.LogError(ex, "Ocurrió un error inesperado durante la obtención de la categoría {CategoryId}.", id);
+                _logger.LogError(ex, "Ocurrió un error inesperado durante la obtención de la categoría {CategoryId}.", id);
                 return OperationResult<CategoryResponse>.Failure(
                     "Ocurrió un error interno imprevisto.",
                     "UnexpectedError",

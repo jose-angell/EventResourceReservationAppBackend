@@ -1,14 +1,17 @@
 ﻿using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace EventResourceReservationApp.Application.UseCases.Categories
 {
     public class DeleteCategoryUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public DeleteCategoryUseCase(IUnitOfWork unitOfWork)
+        private readonly ILogger<DeleteCategoryUseCase> _logger;
+        public DeleteCategoryUseCase(IUnitOfWork unitOfWork, ILogger<DeleteCategoryUseCase> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
         public async Task<OperationResult> ExecuteAsync(int categoryId)
         {
@@ -17,7 +20,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 var deleteCategory = await _unitOfWork.Categories.GetByIdAsync(categoryId);
                 if (deleteCategory == null)
                 {
-                    //TODO: _logger.LogWarning("Fallo al eliminar: No se encontró una categoría con el ID '{CategoryId}'.", request.Id);
+                    _logger.LogWarning("Fallo al eliminar: No se encontró una categoría con el ID '{CategoryId}'.", categoryId);
                     return OperationResult.Failure(
                             $"No se encontró una categoría con el ID '{categoryId}'.",
                             "NotFound",
@@ -33,7 +36,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (PersistenceException pEx)
             {
-                //TODO: _logger.LogError(pEx, "Fallo al actualizar la categoría debido a un error de persistencia.");
+                _logger.LogError(pEx, "Fallo al actualizar la categoría debido a un error de persistencia.");
                 return OperationResult.Failure("No se pudo eliminar la categoría de la base de datos.",
                     "PersistenceError",
                     "La operación de eliminación falló debido a un problema de almacenamiento de datos."
@@ -41,7 +44,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (Exception ex)
             {
-                //TODO: _logger.LogError(ex, "Ocurrió un error inesperado durante la eliminación de la categoría en el caso de uso.");
+                _logger.LogError(ex, "Ocurrió un error inesperado durante la eliminación de la categoría en el caso de uso.");
                 return OperationResult.Failure("Ocurrió un error interno imprevisto.",
                     "UnexpectedError",
                     "La operación de eliminación falló debido a un problema inesperado."

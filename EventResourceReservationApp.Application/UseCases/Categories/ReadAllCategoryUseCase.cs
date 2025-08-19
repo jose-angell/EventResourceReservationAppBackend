@@ -2,6 +2,7 @@
 using EventResourceReservationApp.Application.DTOs.Categories;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace EventResourceReservationApp.Application.UseCases.Categories
@@ -9,9 +10,11 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
     public class ReadAllCategoryUseCase
     {
         private readonly IUnitOfWork _UnitOfWork;
-        public ReadAllCategoryUseCase(IUnitOfWork unitOfWork)
+        private readonly ILogger<ReadAllCategoryUseCase> _logger;
+        public ReadAllCategoryUseCase(IUnitOfWork unitOfWork, ILogger<ReadAllCategoryUseCase> logger)
         {
             _UnitOfWork = unitOfWork;
+            _logger = logger;
         }
         public async Task<OperationResult<IEnumerable<CategoryResponse>>> ExecuteAsync(ReadAllCategoryRequest request)
         {
@@ -61,7 +64,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (PersistenceException pEx)
             {
-                //TODO: _logger.LogError(pEx, "Fallo al obtener las categorías debido a un error de persistencia.");
+                _logger.LogError(pEx, "Fallo al obtener las categorías debido a un error de persistencia.");
                 return OperationResult<IEnumerable<CategoryResponse>>.Failure(
                     "No se pudieron obtener las categorías de la base de datos.",
                     "PersistenceError",
@@ -70,7 +73,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (Exception ex)
             {
-                //TODO: _logger.LogError(ex, "Ocurrió un error inesperado durante la obtención de las categorías en el caso de uso.");
+                _logger.LogError(ex, "Ocurrió un error inesperado durante la obtención de las categorías en el caso de uso.");
                 return OperationResult<IEnumerable<CategoryResponse>>.Failure(
                     "Ocurrió un error interno imprevisto.",
                     "UnexpectedError",

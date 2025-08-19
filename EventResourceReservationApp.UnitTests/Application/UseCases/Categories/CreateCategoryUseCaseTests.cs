@@ -1,8 +1,10 @@
-﻿using EventResourceReservationApp.Application.Common;
+﻿using Castle.Core.Logging;
+using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.DTOs.Categories;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Application.UseCases.Categories;
 using EventResourceReservationApp.Domain;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -18,11 +20,13 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Categories
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<ICategoryRepository> _mockCategoryRepository;
         private readonly CreateCategoryUseCase _useCase;
+        private readonly Mock<ILogger<CreateCategoryUseCase>> _mockLogger;
         public CreateCategoryUseCaseTests()
         {
             // 2. Inicializamos ambos mocks.
             _mockUnitOfWork = new Mock<IUnitOfWork>();
             _mockCategoryRepository = new Mock<ICategoryRepository>();
+            _mockLogger = new Mock<ILogger<CreateCategoryUseCase>>();
 
             // 3. ¡La clave está aquí! Le decimos al _mockUnitOfWork que,
             //    cuando se acceda a su propiedad 'Categories', devuelva el objeto
@@ -30,7 +34,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Categories
             _mockUnitOfWork.Setup(u => u.Categories).Returns(_mockCategoryRepository.Object);
 
             // 4. Creamos la instancia del caso de uso, pasándole el objeto mockeado de UnitOfWork.
-            _useCase = new CreateCategoryUseCase(_mockUnitOfWork.Object);
+            _useCase = new CreateCategoryUseCase(_mockUnitOfWork.Object,_mockLogger.Object);
         }
         [Fact]
         public async Task ExecuteAsync_WithValidRequest_RetunrsSuccess()

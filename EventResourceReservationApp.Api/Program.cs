@@ -1,15 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using EventResourceReservationApp.Infrastructure.Data;
-using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Api;
+using EventResourceReservationApp.Application.Repositories;
+using EventResourceReservationApp.Infrastructure.Data;
 using EventResourceReservationApp.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Host.UseSerilog((ctx, lc) => lc
+    .ReadFrom.Configuration(ctx.Configuration));
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -20,7 +25,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 //Captura las excepciones no manejadas y las redirige a un middleware de manejo de excepciones
 app.UseExceptionHandler("/error");
 app.Map("/error", (HttpContext context) =>

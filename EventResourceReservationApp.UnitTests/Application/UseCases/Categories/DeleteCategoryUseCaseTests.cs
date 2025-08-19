@@ -1,7 +1,9 @@
-﻿using EventResourceReservationApp.Application.Common;
+﻿using Castle.Core.Logging;
+using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Application.UseCases.Categories;
 using EventResourceReservationApp.Domain;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -15,13 +17,15 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Categories
     {
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
         private readonly Mock<ICategoryRepository> _mockCategoryRepository;
+        private readonly Mock<ILogger<DeleteCategoryUseCase>> _mockLogger;
         private readonly DeleteCategoryUseCase _useCase;
         public DeleteCategoryUseCaseTests()
         {
             _mockCategoryRepository = new Mock<ICategoryRepository>();
             _mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockLogger = new Mock<ILogger<DeleteCategoryUseCase>>();   
             _mockUnitOfWork.Setup(u => u.Categories).Returns(_mockCategoryRepository.Object);
-            _useCase = new DeleteCategoryUseCase(_mockUnitOfWork.Object);
+            _useCase = new DeleteCategoryUseCase(_mockUnitOfWork.Object, _mockLogger.Object);
         }
         [Fact]
         public async Task ExecuteAsync_CategoryExists_ShouldReturnSuccess()

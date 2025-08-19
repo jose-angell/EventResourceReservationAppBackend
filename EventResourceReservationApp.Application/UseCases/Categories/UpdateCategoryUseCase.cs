@@ -2,15 +2,18 @@
 using EventResourceReservationApp.Application.DTOs.Categories;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
+using Microsoft.Extensions.Logging;
 
 namespace EventResourceReservationApp.Application.UseCases.Categories
 {
     public class UpdateCategoryUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public UpdateCategoryUseCase(IUnitOfWork unitOfWork)
+        private readonly ILogger<UpdateCategoryUseCase> _logger;
+        public UpdateCategoryUseCase(IUnitOfWork unitOfWork, ILogger<UpdateCategoryUseCase> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
         public async Task<OperationResult> ExecuteAsync(UpdateCategoryRequest request)
         {
@@ -19,7 +22,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             updateCategory = await _unitOfWork.Categories.GetByIdAsync(request.Id);
             if (updateCategory == null)
             {
-                //TODO: _logger.LogWarning("Fallo al actualizar: No se encontró una categoría con el ID '{CategoryId}'.", request.Id);
+                _logger.LogWarning("Fallo al actualizar: No se encontró una categoría con el ID '{CategoryId}'.", request.Id);
                 return OperationResult.Failure(
                         $"No se encontró una categoría con el ID '{request.Id}'.",
                         "NotFound",
@@ -34,7 +37,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                     var existingCategoryWithSameName = await _unitOfWork.Categories.GetFirstOrDefaultAsync(c => c.Name == request.Name);
                     if (existingCategoryWithSameName != null)
                     {
-                        ///TODO: _logger.LogWarning("Fallo al actualizar categoría: Ya existe otra categoría con el nombre '{CategoryName}'.", request.Name);
+                        _logger.LogWarning("Fallo al actualizar categoría: Ya existe otra categoría con el nombre '{CategoryName}'.", request.Name);
                         return OperationResult.Failure(
                             $"Ya existe una categoría con el nombre '{request.Name}'.",
                             "Conflict",
@@ -50,7 +53,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (ArgumentException argEx)
             {
-                //TODO: _logger.LogWarning(argEx, "Fallo al actualizar categoría debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
+                _logger.LogWarning(argEx, "Fallo al actualizar categoría debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
                 return OperationResult<CategoryResponse>.Failure(
                      "La operación de creación falló debido a una entrada inválida.",
                      "InvalidInput",
@@ -59,7 +62,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (PersistenceException pEx)
             {
-                //TODO: _logger.LogError(pEx, "Fallo al actualizar la categoría debido a un error de persistencia.");
+                _logger.LogError(pEx, "Fallo al actualizar la categoría debido a un error de persistencia.");
                 return OperationResult.Failure("No se pudo guardar los cambios de la categoría en la base de datos.",
                     "PersistenceError",
                     "La operación de actualización falló debido a un problema de almacenamiento de datos."
@@ -67,7 +70,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (Exception ex)
             {
-                //TODO: _logger.LogError(ex, "Ocurrió un error inesperado durante la actualización de la categoría en el caso de uso.");
+                _logger.LogError(ex, "Ocurrió un error inesperado durante la actualización de la categoría en el caso de uso.");
                 return OperationResult.Failure("Ocurrió un error interno imprevisto.",
                     "UnexpectedError",
                     "La operación de actualización falló debido a un problema inesperado."

@@ -2,22 +2,25 @@
 using EventResourceReservationApp.Application.DTOs.Categories;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
+using Microsoft.Extensions.Logging;
 
 namespace EventResourceReservationApp.Application.UseCases.Categories
 {
     public class CreateCategoryUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CreateCategoryUseCase(IUnitOfWork unitOfWork)
+        private readonly ILogger<CreateCategoryUseCase> _logger;
+        public CreateCategoryUseCase(IUnitOfWork unitOfWork, ILogger<CreateCategoryUseCase> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
         public async Task<OperationResult<CategoryResponse>> ExecuteAsync(CreateCategoryRequest request)
         {
             var existingCategory = await _unitOfWork.Categories.GetFirstOrDefaultAsync(c => c.Name == request.Name);
             if (existingCategory != null)
             {
-                //TODO: _logger.LogWarning("Fallo al crear categoría: Ya existe una categoría con el nombre '{CategoryName}'.", request.Name);
+                _logger.LogWarning("Fallo al crear categoría: Ya existe una categoría con el nombre '{CategoryName}'.", request.Name);
                 return OperationResult<CategoryResponse>.Failure(
                     $"Ya existe una categoría con el nombre '{request.Name}'.",
                     "Conflict",
@@ -43,7 +46,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (ArgumentException argEx)
             {
-                //TODO: _logger.LogWarning(argEx, "Fallo al crear categoría debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
+                _logger.LogWarning(argEx, "Fallo al crear categoría debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
                 return OperationResult<CategoryResponse>.Failure(
                     "La operación de creación falló debido a una entrada inválida.",
                     "InvalidInput",
@@ -52,7 +55,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (PersistenceException pEx)
             {
-                //TODO: _logger.LogError(pEx, "Fallo al crear categoría debido a un error de persistencia.");
+                _logger.LogError(500,pEx, "Fallo al crear categoría debido a un error de persistencia.");
                 return OperationResult<CategoryResponse>.Failure("No se pudo guardar la categoría en la base de datos.",
                     "PersistenceError",
                     "La operación de creación falló debido a un problema de almacenamiento de datos."
@@ -60,7 +63,7 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
             }
             catch (Exception exc)
             {
-                //TODO: _logger.LogError(ex, "Ocurrió un error inesperado durante la creación de la categoría en el caso de uso.");
+                _logger.LogError(500,exc, "Ocurrió un error inesperado durante la creación de la categoría en el caso de uso.");
                 return OperationResult<CategoryResponse>.Failure("Ocurrió un error interno imprevisto.",
                     "UnexpectedError",
                     "La operación de creación falló debido a un problema inesperado."
