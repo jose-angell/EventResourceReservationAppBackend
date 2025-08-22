@@ -11,6 +11,7 @@ namespace EventResourceReservationApp.Infrastructure.Data
     public class ApplicationDbContext: DbContext
     {
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

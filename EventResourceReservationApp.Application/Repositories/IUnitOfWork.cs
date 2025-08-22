@@ -9,7 +9,7 @@ namespace EventResourceReservationApp.Application.Repositories
     public interface IUnitOfWork: IDisposable
     {
         ICategoryRepository Categories { get; }
-
+        ILocationRepository Locations { get; }
         Task SaveAsync();
     }
 }
