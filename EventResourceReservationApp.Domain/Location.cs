@@ -11,7 +11,7 @@
         public string ExteriorNumber { get; set; }
         public string InteriorNumber { get; set; }
         public Guid CreatedByUserId { get; set; }
-        public DateTime CreateAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public Location()
         {
@@ -56,7 +56,7 @@
             ExteriorNumber = exteriorNumber;
             InteriorNumber = interiorNumber ?? string.Empty;
             CreatedByUserId = createdByUserId;
-            CreateAt = DateTime.UtcNow;
+            CreatedAt = DateTime.UtcNow;
         }
         public void Update(string country, string city, int zipCode, string street, string neighborhood, string exteriorNumber, string interiorNumber)
         {

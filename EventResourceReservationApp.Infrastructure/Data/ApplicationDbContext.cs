@@ -36,7 +36,7 @@ namespace EventResourceReservationApp.Infrastructure.Data
                 entity.Property(e => e.ExteriorNumber).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.InteriorNumber).HasMaxLength(50);
                 entity.Property(e => e.CreatedByUserId).IsRequired();
-                entity.Property(e => e.CreateAt).IsRequired();
+                entity.Property(e => e.CreatedAt).IsRequired();
             });
         }
     }
