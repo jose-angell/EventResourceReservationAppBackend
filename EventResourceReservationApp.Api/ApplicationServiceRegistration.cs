@@ -1,4 +1,5 @@
 ﻿using EventResourceReservationApp.Application.UseCases.Categories;
+using EventResourceReservationApp.Application.UseCases.Locations;
 
 namespace EventResourceReservationApp.Api
 {
@@ -13,6 +14,13 @@ namespace EventResourceReservationApp.Api
             services.AddTransient<ListAllCategoryUseCase>();
             services.AddTransient<ReadAllCategoryUseCase>();
             services.AddTransient<ReadByIdCategoryUseCase>();
+
+            // Register Use Cases for Locations
+            services.AddTransient<CreateLocationUseCase>();
+            services.AddTransient<UpdateLocationUseCase>();
+            services.AddTransient<DeleteLocationUseCase>();
+            services.AddTransient<ReadAllLocationUseCase>();
+            services.AddTransient<ReadByIdLocationUseCase>();
 
             return services;
         }
