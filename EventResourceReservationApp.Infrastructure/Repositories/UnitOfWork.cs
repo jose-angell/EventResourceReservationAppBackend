@@ -9,10 +9,12 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
     {
         private readonly ApplicationDbContext _context;
         public ICategoryRepository Categories { get; private set; }
+        public ILocationRepository Locations { get; private set; }
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Categories = new CategoryRepository(_context);
+            Locations = new LocationRepository(_context);
         }
         public async Task SaveAsync()
         {
