@@ -1,5 +1,5 @@
 ﻿using EventResourceReservationApp.Api.Helpers;
-using EventResourceReservationApp.Application.DTOs.Loctions;
+using EventResourceReservationApp.Application.DTOs.Locations;
 using EventResourceReservationApp.Application.UseCases.Locations;
 using Microsoft.AspNetCore.Mvc;
 

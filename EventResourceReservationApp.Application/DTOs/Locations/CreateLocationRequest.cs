@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventResourceReservationApp.Application.DTOs.Loctions
+namespace EventResourceReservationApp.Application.DTOs.Locations
 {
-    public class UpdateLocationRequest
+    public class CreateLocationRequest
     {
-        [Required(ErrorMessage = "El Id de la ubicacion es obligatorio.")]
-        public int Id { get; set; }
         [Required(ErrorMessage = "El nombre del pais es obligatorio.")]
         [StringLength(100, ErrorMessage = "El nombre del pais no puede exceder los 100 caracteres.")]
         public string Country { get; set; }
@@ -35,5 +33,8 @@ namespace EventResourceReservationApp.Application.DTOs.Loctions
 
         [StringLength(50, ErrorMessage = "El número interior no puede exceder los 50 caracteres.")]
         public string InteriorNumber { get; set; }
+
+        [Required(ErrorMessage = "El ID del usuario creador es obligatorio.")]
+        public Guid CreatedByUserId { get; set; }
     }
 }

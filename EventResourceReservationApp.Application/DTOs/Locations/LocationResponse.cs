@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventResourceReservationApp.Application.DTOs.Loctions
+namespace EventResourceReservationApp.Application.DTOs.Locations
 {
     public class LocationResponse
     {
@@ -17,6 +17,6 @@ namespace EventResourceReservationApp.Application.DTOs.Loctions
         public string ExteriorNumber { get; set; }
         public string InteriorNumber { get; set; }
         public Guid CreatedByUserId { get; set; }
-        public DateTime CreateAt { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

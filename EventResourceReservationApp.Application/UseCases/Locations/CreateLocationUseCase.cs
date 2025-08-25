@@ -1,6 +1,6 @@
 ﻿using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.DTOs.Categories;
-using EventResourceReservationApp.Application.DTOs.Loctions;
+using EventResourceReservationApp.Application.DTOs.Locations;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
 using Microsoft.Extensions.Logging;
@@ -40,7 +40,7 @@ namespace EventResourceReservationApp.Application.UseCases.Locations
                     ExteriorNumber = location.ExteriorNumber,
                     InteriorNumber = location.InteriorNumber,
                     CreatedByUserId = location.CreatedByUserId,
-                    CreateAt = location.CreatedAt
+                    CreatedAt = location.CreatedAt
                 };
                 return OperationResult<LocationResponse>.Success(response, "Ubicaion creada exitosamente.");
             }

@@ -1,5 +1,5 @@
 ﻿using EventResourceReservationApp.Application.Common;
-using EventResourceReservationApp.Application.DTOs.Loctions;
+using EventResourceReservationApp.Application.DTOs.Locations;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
 using Microsoft.Extensions.Logging;
@@ -51,7 +51,7 @@ namespace EventResourceReservationApp.Application.UseCases.Locations
             }
             catch (PersistenceException pEx)
             {
-                _logger.LogError(500, pEx, "Fallo al actualizar ubicación debido a un error de persistencia.");
+                _logger.LogError(pEx, "Fallo al actualizar ubicación debido a un error de persistencia.");
                 return OperationResult.Failure("No se pudo guardar la ubicación en la base de datos.",
                     "PersistenceError",
                     "La operación de actualización falló debido a un error de persistencia."

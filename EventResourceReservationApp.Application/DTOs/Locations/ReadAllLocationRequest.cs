@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventResourceReservationApp.Application.DTOs.Loctions
+namespace EventResourceReservationApp.Application.DTOs.Locations
 {
     public class ReadAllLocationRequest
     {
