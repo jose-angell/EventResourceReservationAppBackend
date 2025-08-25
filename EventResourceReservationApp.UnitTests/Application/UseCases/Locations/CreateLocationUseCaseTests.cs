@@ -1,5 +1,5 @@
 ﻿using EventResourceReservationApp.Application.Common;
-using EventResourceReservationApp.Application.DTOs.Loctions;
+using EventResourceReservationApp.Application.DTOs.Locations;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Application.UseCases.Locations;
 using EventResourceReservationApp.Domain;
