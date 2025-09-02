@@ -12,6 +12,7 @@ namespace EventResourceReservationApp.Infrastructure.Data
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<ReservationCarItem> ReservationCarItems { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -37,6 +38,15 @@ namespace EventResourceReservationApp.Infrastructure.Data
                 entity.Property(e => e.InteriorNumber).HasMaxLength(50);
                 entity.Property(e => e.CreatedByUserId).IsRequired();
                 entity.Property(e => e.CreatedAt).IsRequired();
+            });
+            modelBuilder.Entity<ReservationCarItem>(entity =>
+            {
+                entity.ToTable("ReservationCarItems");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.ClientId).IsRequired();
+                entity.Property(e => e.ResourceId).IsRequired();
+                entity.Property(e => e.Quantity).IsRequired();
+                entity.Property(e => e.AddedAt).IsRequired();
             });
         }
     }
