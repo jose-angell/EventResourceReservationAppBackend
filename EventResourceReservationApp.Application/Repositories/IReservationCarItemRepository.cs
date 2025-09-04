@@ -10,6 +10,7 @@ namespace EventResourceReservationApp.Application.Repositories
     public interface IReservationCarItemRepository: IRepository<ReservationCarItem>
     {
         Task<ReservationCarItem> GetByIdAsync(Guid id);
+        Task<ReservationCarItem> GetByClientIdAndResourceIdAsync(Guid clientId, Guid ResourceId);
         Task UpdateAsync(ReservationCarItem item);
     }
 }
