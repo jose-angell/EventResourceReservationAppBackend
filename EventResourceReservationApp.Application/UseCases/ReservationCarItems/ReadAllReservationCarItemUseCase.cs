@@ -1,10 +1,12 @@
 ﻿using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.DTOs.ReservationCarItems;
 using EventResourceReservationApp.Application.Repositories;
+using EventResourceReservationApp.Domain;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,11 +21,13 @@ namespace EventResourceReservationApp.Application.UseCases.ReservationCarItems
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
-        public async Task<OperationResult<IEnumerable<ReservationCarItemResponse>>> ExecuteAsync()
+        public async Task<OperationResult<IEnumerable<ReservationCarItemResponse>>> ExecuteAsync(Guid ClientId)
         {
             try
             {
-                var items = await _unitOfWork.ReservationCarItems.GetAllAsync();
+                Expression<Func<ReservationCarItem, bool>>? filter = null;
+                filter = item => item.ClientId == ClientId;
+                var items = await _unitOfWork.ReservationCarItems.GetAllAsync(filter);
                 var response = items.Select(item => new ReservationCarItemResponse
                 {
                     Id = item.Id,
