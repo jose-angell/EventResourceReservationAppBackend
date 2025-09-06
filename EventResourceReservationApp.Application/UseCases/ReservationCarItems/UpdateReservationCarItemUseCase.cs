@@ -24,7 +24,7 @@ namespace EventResourceReservationApp.Application.UseCases.ReservationCarItems
         public async Task<OperationResult> ExecuteAsync(UpdateReservationCarItemRequest request)
         {
             var existingItem = await _unitOfWork.ReservationCarItems.GetByIdAsync(request.Id);
-            if (existingItem != null)
+            if (existingItem == null)
             {
            
                 _logger.LogWarning("Fallo al actualizar el elemento de Carrito de reservas: No se encontró el elemento con Id '{Id}'.", request.Id);

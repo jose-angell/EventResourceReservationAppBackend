@@ -38,7 +38,7 @@ namespace EventResourceReservationApp.Api.Controllers
             }
             return this.HandleOperationError(result);
         }
-        [HttpGet("{id}")]
+        [HttpGet("{clientId}")]
         public async Task<IActionResult> ReadAllReservationCarItems([FromRoute] Guid clientId)
         {
             if (clientId == Guid.Empty)
