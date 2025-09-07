@@ -34,7 +34,7 @@ namespace EventResourceReservationApp.Application.UseCases.ReservationCarItems
             {
                 await _unitOfWork.ReservationCarItems.RemoveASync(existingItem);
                 await _unitOfWork.SaveAsync();
-                return OperationResult.Success("Elemento eliminado exitosamente");
+                return OperationResult.Success("Elemento eliminado exitosamente.");
             }
             catch (PersistenceException pEx)
             {
