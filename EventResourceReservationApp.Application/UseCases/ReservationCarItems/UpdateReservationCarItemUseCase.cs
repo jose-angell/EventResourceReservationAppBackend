@@ -45,9 +45,9 @@ namespace EventResourceReservationApp.Application.UseCases.ReservationCarItems
             {
                 _logger.LogWarning(argEx, "Fallo al actualizar el elemento de Carrito de reservas debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
                 return OperationResult.Failure(
-                    $"Error en los datos proporcionados: {argEx.Message}",
-                    "BadRequest",
-                    "La operación de actualización falló debido a datos inválidos."
+                    "La operación de creación falló debido a una entrada inválida.",
+                     "InvalidInput",
+                     argEx.Message
                 );
             }
             catch (PersistenceException pEx)
@@ -63,7 +63,7 @@ namespace EventResourceReservationApp.Application.UseCases.ReservationCarItems
                 _logger.LogError(ex, "Error inesperado al actualizar el elemento de Carrito de reservas: {ErrorMessage}", ex.Message);
                 return OperationResult.Failure(
                     "Ocurrió un error inesperado al procesar la solicitud.",
-                    "InternalServerError",
+                    "UnexpectedError",
                     "La operación de actualización falló debido a un error del servidor."
                 );
             }

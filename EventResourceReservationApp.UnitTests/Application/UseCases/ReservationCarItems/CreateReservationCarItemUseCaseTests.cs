@@ -30,7 +30,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
         [Fact]
         public async Task ExecuteAsync_WithValidRequest_RetunrsSuccess()
         {
-            // Assert
+            // Arrange
             var request = new CreateReservationCarItemRequest
             {
                 ClientId = Guid.NewGuid(),
@@ -58,7 +58,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
         [Fact]
         public async Task ExecuteAsync_WithInvalidRequestItem_ReturnsFailure()
         {
-            // Assert
+            // Arrange
             var request = new CreateReservationCarItemRequest
             {
                 ClientId = Guid.NewGuid(),
@@ -84,7 +84,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
         [Fact]
         public async Task ExecuteAsync_WithInvalidRequest_ReturnsFailure()
         {
-            // Assert
+            // Arrange
             var request = new CreateReservationCarItemRequest
             {
                 ClientId = Guid.Empty,
@@ -105,7 +105,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
         [Fact]
         public async Task ExecuteAsync_WithPersistenceError_ReturnsFailure()
         {
-            // Assert
+            // Arrange
             var request = new CreateReservationCarItemRequest
             {
                 ClientId = Guid.NewGuid(),
