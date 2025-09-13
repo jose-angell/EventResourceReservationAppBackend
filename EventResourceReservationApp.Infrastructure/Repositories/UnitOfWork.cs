@@ -11,12 +11,14 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
         public ICategoryRepository Categories { get; private set; }
         public ILocationRepository Locations { get; private set; }
         public IReservationCarItemRepository ReservationCarItems { get; private set; }
+        public IReviewRepository Reviews { get; private set; } 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             Categories = new CategoryRepository(_context);
             Locations = new LocationRepository(_context);
             ReservationCarItems = new ReservationCarItemRepository(_context);
+            Reviews = new ReviewRepository(_context);
         }
         public async Task SaveAsync()
         {
