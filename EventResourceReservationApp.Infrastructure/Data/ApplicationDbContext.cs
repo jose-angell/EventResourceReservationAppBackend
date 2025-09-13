@@ -13,6 +13,7 @@ namespace EventResourceReservationApp.Infrastructure.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<ReservationCarItem> ReservationCarItems { get; set; }
+        public DbSet<Review> Reviews { get; set; }  
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -47,6 +48,16 @@ namespace EventResourceReservationApp.Infrastructure.Data
                 entity.Property(e => e.ResourceId).IsRequired();
                 entity.Property(e => e.Quantity).IsRequired();
                 entity.Property(e => e.AddedAt).IsRequired();
+            });
+            modelBuilder.Entity<Review>(entity =>
+            {
+                entity.ToTable("Reviews");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.ResourceId).IsRequired();
+                entity.Property(e => e.UserId).IsRequired();
+                entity.Property(e => e.Rating).IsRequired();
+                entity.Property(e => e.Comment).IsRequired().HasMaxLength(1000);
+                entity.Property(e => e.CreatedAt).IsRequired();
             });
         }
     }
