@@ -46,7 +46,7 @@ namespace EventResourceReservationApp.Domain
             Comment = comment;
             CreatedAt = DateTime.UtcNow;
         }
-        public void UpdateReview(int rating, string comment)
+        public void Update(int rating, string comment)
         {
             if (rating < 1 || rating > 5)
             {
