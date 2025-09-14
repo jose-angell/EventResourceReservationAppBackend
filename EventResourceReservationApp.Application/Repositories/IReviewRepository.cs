@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EventResourceReservationApp.Application.Repositories
 {
-    public interface IReviewRepository
+    public interface IReviewRepository: IRepository<Review>
     {
         Task<Review> GetById(Guid id);
         Task UpdateAsync(Review review);
