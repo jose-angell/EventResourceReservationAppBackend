@@ -25,52 +25,21 @@ namespace EventResourceReservationApp.Application.UseCases.Locations
         {
             try
             {
-                Expression<Func<Location, bool>>? filter = null;
-                Func<IQueryable<Location>, IOrderedQueryable<Location>>? orderBy = null;
-                if (!string.IsNullOrEmpty(request.City))
-                {
-                    filter = c => c.City.Contains(request.City);
-                }
-                if (request.ZipCode > 0)
-                {
-                    if (filter != null)
+                var locations = await _unitOfWork.Locations.GetAllAsync(
+                    filter : l =>
+                        (string.IsNullOrEmpty(request.City) || l.City.Contains(request.City)) &&
+                        (request.ZipCode == null || l.ZipCode == request.ZipCode) &&
+                        (!request.CreatedByUserIdFilter.HasValue || request.CreatedByUserIdFilter == Guid.Empty || l.CreatedByUserId == request.CreatedByUserIdFilter),
+                    orderBy: q =>
                     {
-                        Expression<Func<Location, bool>> newFilter = c => c.ZipCode == request.ZipCode;
-                        var parameter = filter.Parameters.Single();
-                        var body = Expression.AndAlso(filter.Body, Expression.Invoke(newFilter, parameter));
-                        filter = Expression.Lambda<Func<Location, bool>>(body, parameter);
+                        return request.OrderBy?.ToLower() switch
+                        {
+                            "City_asc" => q.OrderBy(l => l.City),
+                            "CreatedAt_asc" => q.OrderBy(l => l.CreatedAt),
+                            _ => q.OrderByDescending(l => l.CreatedAt),
+                        };
                     }
-                    else
-                    {
-                        filter = c => c.ZipCode == request.ZipCode;
-                    }
-                }
-                if (request.CreatedByUserIdFilter.HasValue && request.CreatedByUserIdFilter != Guid.Empty)
-                {
-                    if (filter != null)
-                    {
-                        Expression<Func<Location, bool>> newFilter = c => c.CreatedByUserId == request.CreatedByUserIdFilter;
-                        var parameter = filter.Parameters.Single();
-                        var body = Expression.AndAlso(filter.Body, Expression.Invoke(newFilter, parameter));
-                        filter = Expression.Lambda<Func<Location, bool>>(body, parameter);
-                    }
-                    else
-                    {
-                        filter = c => c.CreatedByUserId == request.CreatedByUserIdFilter;
-                    }
-                }
-                if (!string.IsNullOrEmpty(request.OrderBy))
-                {
-                    if (request.OrderBy.Equals("City_asc", StringComparison.OrdinalIgnoreCase))
-                    {
-                        orderBy = q => q.OrderBy(c => c.City);
-                    }
-                    else if (request.OrderBy.Equals("CreatedAt_asc", StringComparison.OrdinalIgnoreCase))
-                    {
-                        orderBy = q => q.OrderBy(c => c.CreatedAt);
-                    }
-                }
-                var locations = await _unitOfWork.Locations.GetAllAsync(filter, orderBy);
+                );
                 var locationResponses = locations.Select(l => new LocationResponse
                 {
                     Id = l.Id,

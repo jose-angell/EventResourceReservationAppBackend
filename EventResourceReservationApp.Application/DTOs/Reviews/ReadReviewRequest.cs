@@ -8,10 +8,11 @@ namespace EventResourceReservationApp.Application.DTOs.Reviews
 {
     public class ReadReviewRequest
     {
-        public Guid ResourceId { get; set; }
-        public Guid UserId { get; set; }
-        public int Rating { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public Guid? ResourceId { get; set; }
+        public Guid? UserId { get; set; }
+        public int? Rating { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public string? OrderBy { get; set; } 
 
     }
 }

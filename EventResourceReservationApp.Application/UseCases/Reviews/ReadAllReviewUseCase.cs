@@ -25,11 +25,21 @@ namespace EventResourceReservationApp.Application.UseCases.Reviews
             {
                 var reviews = await _unitOfWork.Reviews.GetAllAsync(
                     filter: r =>
-                        (request.ResourceId == Guid.Empty || r.ResourceId == request.ResourceId) &&
-                        (request.UserId == Guid.Empty || r.UserId == request.UserId) &&
-                        (request.Rating == 0 || r.Rating == request.Rating) &&
-                        (request.CreatedAt == default(DateTime) || r.CreatedAt.Date == request.CreatedAt.Date),
-                    orderBy: q => q.OrderBy(r => r.CreatedAt)
+                        (request.ResourceId == null || r.ResourceId == request.ResourceId) &&
+                        (request.UserId == null || r.UserId == request.UserId) &&
+                        (request.Rating == null || r.Rating == request.Rating) &&
+                        (request.CreatedAt == null ||  r.CreatedAt.Date == request.CreatedAt.Value.Date),
+                    orderBy: q =>
+                    {
+                        return request.OrderBy?.ToLower() switch
+                        {
+                            "rating_asc" => q.OrderBy(r => r.Rating),
+                            "rating_desc" => q.OrderByDescending(r => r.Rating),
+                            "date_asc" => q.OrderBy(r => r.CreatedAt),
+                            "date_desc" => q.OrderByDescending(r => r.CreatedAt),
+                            _ => q.OrderByDescending(r => r.CreatedAt),
+                        };
+                    }
                 );
                 var response = reviews.Select(r => new ReviewResponse
                 {
