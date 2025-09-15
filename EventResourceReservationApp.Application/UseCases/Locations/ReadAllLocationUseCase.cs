@@ -27,15 +27,17 @@ namespace EventResourceReservationApp.Application.UseCases.Locations
             {
                 var locations = await _unitOfWork.Locations.GetAllAsync(
                     filter : l =>
-                        (string.IsNullOrEmpty(request.City) || l.City.Contains(request.City)) &&
+                        (string.IsNullOrEmpty(request.City) || l.City.ToLower().Contains(request.City.ToLower())) &&
                         (request.ZipCode == null || l.ZipCode == request.ZipCode) &&
                         (request.CreatedByUserIdFilter == null || l.CreatedByUserId == request.CreatedByUserIdFilter),
                     orderBy: q =>
                     {
                         return request.OrderBy?.ToLower() switch
                         {
-                            "City_asc" => q.OrderBy(l => l.City),
-                            "CreatedAt_asc" => q.OrderBy(l => l.CreatedAt),
+                            "city_asc" => q.OrderBy(l => l.City),
+                            "city_desc" => q.OrderByDescending(l => l.City),
+                            "createdAt_asc" => q.OrderBy(l => l.CreatedAt),
+                            "createdAt_desc" => q.OrderByDescending(l => l.CreatedAt),
                             _ => q.OrderByDescending(l => l.CreatedAt),
                         };
                     }
