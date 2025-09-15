@@ -29,7 +29,7 @@ namespace EventResourceReservationApp.Application.UseCases.Locations
                     filter : l =>
                         (string.IsNullOrEmpty(request.City) || l.City.Contains(request.City)) &&
                         (request.ZipCode == null || l.ZipCode == request.ZipCode) &&
-                        (!request.CreatedByUserIdFilter.HasValue || request.CreatedByUserIdFilter == Guid.Empty || l.CreatedByUserId == request.CreatedByUserIdFilter),
+                        (request.CreatedByUserIdFilter == null || l.CreatedByUserId == request.CreatedByUserIdFilter),
                     orderBy: q =>
                     {
                         return request.OrderBy?.ToLower() switch

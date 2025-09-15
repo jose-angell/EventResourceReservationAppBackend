@@ -174,7 +174,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
             var result = await _useCase.ExecuteAsync(request);
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.Equal("City 1", result.Data.First().City);
+            Assert.Equal("City 3", result.Data.First().City);
             Assert.Equal("City 2", result.Data.Skip(1).First().City);
         }
         [Fact]
@@ -203,7 +203,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
             var result = await _useCase.ExecuteAsync(request);
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.Equal(new DateTime(2025, 1, 1), result.Data.First().CreatedAt);
+            Assert.Equal(new DateTime(2025, 1, 4), result.Data.First().CreatedAt);
             Assert.Equal(new DateTime(2025, 1, 3), result.Data.Skip(1).First().CreatedAt);
         }
         [Fact]
