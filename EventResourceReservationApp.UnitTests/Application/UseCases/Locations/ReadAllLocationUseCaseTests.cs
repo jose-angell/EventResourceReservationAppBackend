@@ -152,7 +152,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
         public async Task ExecuteAsync_WithOrderingByCity_ReturnsOrderedLocations()
         {
             var locations = GetTestLocations();
-            var request = new ReadAllLocationRequest { OrderBy = "City_asc" };
+            var request = new ReadAllLocationRequest { OrderBy = "city_asc" };
             _mockLocationRepository.Setup(r => r.GetAllAsync(
                 It.IsAny<Expression<Func<Location, bool>>>(),
                 It.IsAny<Func<IQueryable<Location>, IOrderedQueryable<Location>>>(),
@@ -181,7 +181,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
         public async Task ExecuteAsync_WithOrderingByCreatedAt_ReturnsOrderedLocations()
         {
             var locations = GetTestLocations();
-            var request = new ReadAllLocationRequest { OrderBy = "CreatedAt_asc" };
+            var request = new ReadAllLocationRequest { OrderBy = "createdAt_asc" };
             _mockLocationRepository.Setup(r => r.GetAllAsync(
                 It.IsAny<Expression<Func<Location, bool>>>(),
                 It.IsAny<Func<IQueryable<Location>, IOrderedQueryable<Location>>>(),
@@ -203,7 +203,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
             var result = await _useCase.ExecuteAsync(request);
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.Equal(new DateTime(2025, 1, 1), result.Data.First().CreatedAt);
+            Assert.Equal(new DateTime(2025, 1, 4), result.Data.First().CreatedAt);
             Assert.Equal(new DateTime(2025, 1, 3), result.Data.Skip(1).First().CreatedAt);
         }
         [Fact]

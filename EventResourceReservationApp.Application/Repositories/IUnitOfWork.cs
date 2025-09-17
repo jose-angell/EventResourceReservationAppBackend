@@ -11,6 +11,7 @@ namespace EventResourceReservationApp.Application.Repositories
         ICategoryRepository Categories { get; }
         ILocationRepository Locations { get; }
         IReservationCarItemRepository ReservationCarItems { get; }
+        IReviewRepository Reviews { get; }
         Task SaveAsync();
     }
 }
