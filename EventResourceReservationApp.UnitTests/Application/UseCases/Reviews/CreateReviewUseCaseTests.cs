@@ -54,6 +54,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reviews
             Assert.Equal(request.Comment, result.Data.Comment);
             _reviewRepository.Verify(r => r.AddAsync(It.IsAny<Review>()), Times.Once);
             _unitOfWork.Verify(u => u.SaveAsync(), Times.Once);
+            // Verifica que el logger no se llamó.
+            _logger.Verify(x => x.Log(
+                It.IsAny<LogLevel>(),
+                It.IsAny<EventId>(),
+                It.IsAny<It.IsAnyType>(),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Never);
         }
         [Fact]
         public async Task ExecuteAsync_WithInvalidRating_ReturnsFailure()
@@ -74,6 +82,16 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reviews
             Assert.Equal("InvalidInput", result.ErrorCode);
             _reviewRepository.Verify(r => r.AddAsync(It.IsAny<Review>()), Times.Never);
             _unitOfWork.Verify(u => u.SaveAsync(), Times.Never);
+
+            // Verifica que se llamó a LogWarning con un mensaje específico
+            _logger.Verify(
+                x => x.Log(
+                    LogLevel.Warning,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("argumentos inválidos")),
+                    It.IsAny<ArgumentException>(), // Puedes verificar el tipo de excepción
+                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Once);
         }
         [Fact]
         public async Task ExecuteAsync_WhenPersistenceFails_ReturnsFailure()
@@ -98,6 +116,51 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reviews
             Assert.Equal("PersistenceError", result.ErrorCode);
             _reviewRepository.Verify(r => r.AddAsync(It.IsAny<Review>()), Times.Once);
             _unitOfWork.Verify(u => u.SaveAsync(), Times.Once);
+
+            // Verifica que se llamó a LogError con un mensaje específico
+            _logger.Verify(
+                x => x.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("error de persistencia")),
+                    It.IsAny<PersistenceException>(),
+                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Once);
+        }
+        [Fact]
+        public async Task ExecuteAsync_WhenUnexpectedErrorOccurs_ReturnsFailureAndLogsError()
+        {
+            // Arrange
+            var request = new CreateReviewRequest
+            {
+                ResourceId = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
+                Rating = 5,
+                Comment = "Great resource!"
+            };
+
+            _reviewRepository.Setup(r => r.AddAsync(It.IsAny<Review>())).ThrowsAsync(new InvalidOperationException("Unexpected error"));
+
+            // Act
+            var result = await _useCase.ExecuteAsync(request);
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.Null(result.Data);
+            Assert.Equal("UnexpectedError", result.ErrorCode);
+
+            _reviewRepository.Verify(r => r.AddAsync(It.IsAny<Review>()), Times.Once);
+            _unitOfWork.Verify(u => u.SaveAsync(), Times.Never);
+
+            // Verifica que se llamó a LogError para el error inesperado
+            _logger.Verify(
+                x => x.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("error inesperado")),
+                    It.IsAny<Exception>(),
+                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Once);
         }
     }
 }

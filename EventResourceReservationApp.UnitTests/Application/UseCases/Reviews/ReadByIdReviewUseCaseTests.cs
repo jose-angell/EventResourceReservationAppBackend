@@ -48,6 +48,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reviews
             Assert.True(result.IsSuccess);
             Assert.NotNull(result.Data);
             Assert.Equal(reviewId, result.Data.Id);
+            _logger.Verify(
+                x => x.Log(
+                    It.IsAny<LogLevel>(),
+                    It.IsAny<EventId>(),
+                    It.IsAny<It.IsAnyType>(),
+                    It.IsAny<Exception>(),
+                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Never);
         }
         [Fact]
         public async Task ExecuteAsync_WithNonExistentReview_ReturnsFailure()
@@ -61,6 +69,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reviews
             // Assert
             Assert.False(result.IsSuccess);
             Assert.Equal("NotFound", result.ErrorCode);
+            _logger.Verify(
+            x => x.Log(
+                LogLevel.Warning,
+                It.IsAny<EventId>(),
+                It.Is<It.IsAnyType>((o, t) => o.ToString().Contains($"Reseña con Id {reviewId} no encontrada para actualización.")),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+            Times.Once);
         }
         [Fact]
         public async Task ExecuteAsync_PersistenceException_ReturnsFailure()
@@ -74,6 +90,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reviews
             // Assert
             Assert.False(result.IsSuccess);
             Assert.Equal("PersistenceError", result.ErrorCode);
+            _logger.Verify(
+                x => x.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("error de persistencia")),
+                    It.IsAny<PersistenceException>(),
+                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Once);
         }
         [Fact]
         public async Task ExecuteAsync_UnexpectedException_ReturnsFailure()
@@ -87,6 +111,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reviews
             // Assert
             Assert.False(result.IsSuccess);
             Assert.Equal("UnexpectedError", result.ErrorCode);
+            _logger.Verify(
+               x => x.Log(
+                   LogLevel.Error,
+                   It.IsAny<EventId>(),
+                   It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("error inesperado")),
+                   It.IsAny<Exception>(),
+                   (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+               Times.Once);
         }
     }
 }
