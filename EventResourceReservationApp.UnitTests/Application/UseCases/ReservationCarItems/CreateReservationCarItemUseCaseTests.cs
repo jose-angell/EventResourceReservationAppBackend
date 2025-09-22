@@ -54,6 +54,13 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
 
             _mockReservationCarItemRepository.Verify(r => r.AddAsync(It.IsAny<ReservationCarItem>()), Times.Once);
             _mockUnitOfWork.Verify(u => u.SaveAsync(), Times.Once);
+            _mockLogger.Verify(x => x.Log(
+                It.IsAny<LogLevel>(),
+                It.IsAny<EventId>(),
+                It.IsAny<It.IsAnyType>(),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Never);
         }
         [Fact]
         public async Task ExecuteAsync_WithInvalidRequestItem_ReturnsFailure()
@@ -80,6 +87,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             // Verificamos que los métodos AddAsync y SaveAsync nunca fueron llamados.
             _mockReservationCarItemRepository.Verify(r => r.AddAsync(It.IsAny<ReservationCarItem>()), Times.Never);
             _mockUnitOfWork.Verify(u => u.SaveAsync(), Times.Never);
+
         }
         [Fact]
         public async Task ExecuteAsync_WithInvalidRequest_ReturnsFailure()
@@ -127,6 +135,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             Assert.Equal("Ocurrió un error al intentar guardar el elemento. Por favor, inténtelo de nuevo más tarde.", result.Message);
             _mockReservationCarItemRepository.Verify(r => r.AddAsync(It.IsAny<ReservationCarItem>()), Times.Once);
             _mockUnitOfWork.Verify(u => u.SaveAsync(), Times.Once);
+            _mockLogger.Verify(
+               x => x.Log(
+                   LogLevel.Error,
+                   It.IsAny<EventId>(),
+                   It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("error de persistencia")),
+                   It.IsAny<PersistenceException>(),
+                   (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+               Times.Once);
         }
     }
 }
