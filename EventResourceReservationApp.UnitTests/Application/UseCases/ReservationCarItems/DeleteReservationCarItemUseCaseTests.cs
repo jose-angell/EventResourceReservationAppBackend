@@ -54,6 +54,13 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             Assert.Equal("Elemento eliminado exitosamente.", result.Message);
             _mockReservationCarItemRepository.Verify(r => r.RemoveASync(It.IsAny<ReservationCarItem>()), Times.Once);
             _mockUnitOfWork.Verify(r => r.SaveAsync(), Times.Once);
+            _mockLogger.Verify(x => x.Log(
+                It.IsAny<LogLevel>(),
+                It.IsAny<EventId>(),
+                It.IsAny<It.IsAnyType>(),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Never);
         }
         [Fact]
         public async Task ExecuteAsync_ItemNotFound_ReturnsNotFound()
@@ -72,6 +79,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
 
             _mockReservationCarItemRepository.Verify(r => r.RemoveASync(It.IsAny<ReservationCarItem>()), Times.Never);
             _mockUnitOfWork.Verify(r => r.SaveAsync(), Times.Never);
+            _mockLogger.Verify(
+            x => x.Log(
+                LogLevel.Warning,
+                It.IsAny<EventId>(),
+                It.Is<It.IsAnyType>((o, t) => o.ToString().Contains($"Fallo al eliminar el elemento de Carrito de reservas: No se encontró el elemento con Id '{Id}'.")),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+            Times.Once);
         }
         [Fact]
         public async Task ExecuteAsync_WithPersistenceError_ReturnsFailure()
@@ -96,6 +111,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             Assert.False(result.IsSuccess);
             Assert.Equal("PersistenceError", result.ErrorCode);
             Assert.Equal("La operación de eliminación falló debido a un problema de almacenamiento de datos.", result.Message);
+            _mockLogger.Verify(
+                x => x.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("error de persistencia")),
+                    It.IsAny<PersistenceException>(),
+                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Once);
         }
     }
 }

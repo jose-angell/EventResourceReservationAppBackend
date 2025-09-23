@@ -58,7 +58,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             Assert.Equal("Elemento actualizado exitosamente.", result.Message);
 
             _mockReservationCarItemRepository.Verify(r => r.UpdateAsync(It.IsAny<ReservationCarItem>()), Times.Once); 
-            _mockUnitOfWork.Verify(r => r.SaveAsync(), Times.Once); 
+            _mockUnitOfWork.Verify(r => r.SaveAsync(), Times.Once);
+            _mockLogger.Verify(x => x.Log(
+                It.IsAny<LogLevel>(),
+                It.IsAny<EventId>(),
+                It.IsAny<It.IsAnyType>(),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Never);
         }
         [Fact]
         public async Task ExecuteAsync_ItemNotFound_ReturnsNotFound()
@@ -77,6 +84,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             Assert.False(result.IsSuccess);
             Assert.Equal("NotFound", result.ErrorCode);
             Assert.Equal("La operación de actualización falló porque el elemento no existe.", result.Message);
+            _mockLogger.Verify(
+            x => x.Log(
+                LogLevel.Warning,
+                It.IsAny<EventId>(),
+                It.Is<It.IsAnyType>((o, t) => o.ToString().Contains($"Fallo al actualizar el elemento de Carrito de reservas: No se encontró el elemento con Id '{request.Id}'.")),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+            Times.Once);
         }
         [Fact]
         public async Task ExecuteAsync_WithInvalidQuantity_ReturnsInvalidInput()
@@ -136,6 +151,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             Assert.False(result.IsSuccess);
             Assert.Equal("PersistenceError", result.ErrorCode);
             Assert.Equal("La operación de actualización falló debido a un problema de almacenamiento de datos.", result.Message);
+            _mockLogger.Verify(
+                x => x.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("error de persistencia")),
+                    It.IsAny<PersistenceException>(),
+                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Once);
         }
     }
 }
