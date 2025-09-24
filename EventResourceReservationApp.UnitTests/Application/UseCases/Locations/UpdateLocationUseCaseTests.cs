@@ -60,6 +60,13 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
             Assert.Equal("Ubicación actualizada exitosamente.", result.Message);
             _mockLocationRepository.Verify(r => r.GetByIdAsync(request.Id), Times.Once);
             _mockUnitOfWork.Verify(u => u.SaveAsync(), Times.Once);
+            _mockLogger.Verify(x => x.Log(
+                It.IsAny<LogLevel>(),
+                It.IsAny<EventId>(),
+                It.IsAny<It.IsAnyType>(),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Never);
         }
         [Fact]
         public async Task ExecuteAsync_WithNonExistentLocation_ReturnsNotFound()
@@ -87,6 +94,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
 
             _mockLocationRepository.Verify(r => r.GetByIdAsync(request.Id), Times.Once);
             _mockUnitOfWork.Verify(u => u.SaveAsync(), Times.Never);
+            _mockLogger.Verify(
+            x => x.Log(
+                LogLevel.Warning,
+                It.IsAny<EventId>(),
+                It.Is<It.IsAnyType>((o, t) => o.ToString().Contains($"Fallo al actualizar: No se encontró una ubicación con el ID '{request.Id}'.")),
+                It.IsAny<Exception>(),
+                (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+            Times.Once);
         }
         [Fact]
         public async Task ExecuteAsync_WithInvalidRequest_ReturnsFailure()
@@ -144,7 +159,14 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
             Assert.Equal("PersistenceError", result.ErrorCode);
             Assert.Equal("La operación de actualización falló debido a un error de persistencia.", result.Message);
             _mockUnitOfWork.Verify(u => u.SaveAsync(), Times.Never);
-
+            _mockLogger.Verify(
+                x => x.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("error de persistencia")),
+                    It.IsAny<PersistenceException>(),
+                    (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                Times.Once);
         }
     }
 }
