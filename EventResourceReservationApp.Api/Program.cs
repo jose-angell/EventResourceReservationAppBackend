@@ -1,5 +1,6 @@
 using EventResourceReservationApp.Api;
 using EventResourceReservationApp.Application.Repositories;
+using EventResourceReservationApp.Infrastructure;
 using EventResourceReservationApp.Infrastructure.Data;
 using EventResourceReservationApp.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Diagnostics;
@@ -27,6 +28,23 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
+
+// --- INICIO DEL SEEDING ---
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    try
+    {
+        await DbInitializer.SeedRolesAsync(serviceProvider);
+
+    }
+    catch (Exception ex)
+    {
+        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the database.");
+    }
+}
+// --- FIN DEL SEEDING ---
 
 app.UseSerilogRequestLogging();
 //Captura las excepciones no manejadas y las redirige a un middleware de manejo de excepciones
