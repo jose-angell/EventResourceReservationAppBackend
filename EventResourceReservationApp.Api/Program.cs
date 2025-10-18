@@ -1,9 +1,11 @@
 using EventResourceReservationApp.Api;
 using EventResourceReservationApp.Application.Repositories;
+using EventResourceReservationApp.Application.Services;
 using EventResourceReservationApp.Domain;
 using EventResourceReservationApp.Infrastructure;
 using EventResourceReservationApp.Infrastructure.Data;
 using EventResourceReservationApp.Infrastructure.Repositories;
+using EventResourceReservationApp.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
@@ -30,15 +32,15 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
     options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<ApplicationDbContext>()
   .AddDefaultTokenProviders();
-
+//Manejo de Tokens: Este método le enseña a tu API a manejar y validar los tokens JWT enviados en las peticiones HTTP. 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.ASCII.GetBytes(jwtSettings["Secretkey"] ?? throw new InvalidOperationException("SecretKey is not set"));
 builder.Services.AddAuthentication(options =>
-{
+{// Opciones de Autenticación
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
-{
+{// Opciones de Validación del Token
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -53,6 +55,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddApplicationServices();
 
