@@ -55,73 +55,73 @@ namespace EventResourceReservationApp.Infrastructure.Migrations
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedByUserId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Categories",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<int>(type: "integer", nullable: false)
+            //            .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+            //        Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+            //        Description = table.Column<string>(type: "text", nullable: false),
+            //        CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+            //        CreatedByUserId = table.Column<Guid>(type: "uuid", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Categories", x => x.Id);
+            //    });
 
-            migrationBuilder.CreateTable(
-                name: "Locations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    City = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    ZipCode = table.Column<int>(type: "integer", nullable: false),
-                    Street = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Neighborhood = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    ExteriorNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    InteriorNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    CreatedByUserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Locations", x => x.Id);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Locations",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<int>(type: "integer", nullable: false)
+            //            .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+            //        Country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+            //        City = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+            //        ZipCode = table.Column<int>(type: "integer", nullable: false),
+            //        Street = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+            //        Neighborhood = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+            //        ExteriorNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+            //        InteriorNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+            //        CreatedByUserId = table.Column<Guid>(type: "uuid", nullable: false),
+            //        CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Locations", x => x.Id);
+            //    });
 
-            migrationBuilder.CreateTable(
-                name: "ReservationCarItems",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ClientId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ResourceId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false),
-                    AddedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReservationCarItems", x => x.Id);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "ReservationCarItems",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<Guid>(type: "uuid", nullable: false),
+            //        ClientId = table.Column<Guid>(type: "uuid", nullable: false),
+            //        ResourceId = table.Column<Guid>(type: "uuid", nullable: false),
+            //        Quantity = table.Column<int>(type: "integer", nullable: false),
+            //        AddedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_ReservationCarItems", x => x.Id);
+            //    });
 
-            migrationBuilder.CreateTable(
-                name: "Reviews",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ResourceId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Rating = table.Column<int>(type: "integer", nullable: false),
-                    Comment = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reviews", x => x.Id);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Reviews",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<Guid>(type: "uuid", nullable: false),
+            //        ResourceId = table.Column<Guid>(type: "uuid", nullable: false),
+            //        UserId = table.Column<Guid>(type: "uuid", nullable: false),
+            //        Rating = table.Column<int>(type: "integer", nullable: false),
+            //        Comment = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+            //        CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Reviews", x => x.Id);
+            //    });
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",

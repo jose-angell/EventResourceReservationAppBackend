@@ -10,13 +10,40 @@ namespace EventResourceReservationApp.Infrastructure
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-            string[] roleNames = { "Admin", "Manager", "Client" };
-
-            foreach (var roleName in roleNames)
+            // Usamos un Diccionario para definir los roles y sus descripciones
+            var rolesWithDescriptions = new Dictionary<string, string>
             {
+                { "Admin", "Administrador con control total sobre el sistema." },
+                { "Manager", "Gerente con permisos para gestionar reservas y recursos." },
+                { "Client", "Usuario final con permisos para crear y ver sus propias reservas." }
+            };
+
+            foreach (var entry in rolesWithDescriptions)
+            {
+                string roleName = entry.Key;
+                string roleDescription = entry.Value;
+
                 if (!await roleManager.RoleExistsAsync(roleName))
                 {
-                    await roleManager.CreateAsync(new ApplicationRole { Name = roleName, NormalizedName = roleName.ToUpper() });
+                    // 1. Crear una nueva instancia de ApplicationRole
+                    var role = new ApplicationRole
+                    {
+                        Name = roleName,
+                        // 2. Asignar la descripción
+                        Description = roleDescription,
+                        // 3. Asignar el NormalizedName (necesario para Identity)
+                        NormalizedName = roleName.ToUpper()
+                    };
+
+                    // 4. Crear el rol en la base de datos
+                    var result = await roleManager.CreateAsync(role);
+
+                    // Opcional: Manejar errores si la creación del rol falla
+                    if (!result.Succeeded)
+                    {
+                        // Aquí podrías loggear un error.
+                        // Generalmente esto no falla a menos que haya problemas de BD.
+                    }
                 }
             }
         }
