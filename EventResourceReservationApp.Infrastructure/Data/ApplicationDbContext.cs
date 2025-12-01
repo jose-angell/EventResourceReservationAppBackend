@@ -26,6 +26,12 @@ namespace EventResourceReservationApp.Infrastructure.Data
                 entity.ToTable("Categories");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                // 1. Define la relación (Uno a Muchos: HasOne y WithMany)
+                entity.HasOne<ApplicationUser>()
+                      // 2. Indica que no hay propiedad de navegación inversa en ApplicationUser
+                      .WithMany()
+                      // 3. Define la clave foránea (CORRECCIÓN DEL TYPO)
+                      .HasForeignKey(e => e.CreatedByUserId);
             });
             modelBuilder.Entity<Location>(entity =>
             {

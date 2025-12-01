@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public Guid CreatedByUserId { get; set; }
-
+        public ApplicationUser? CreatedByUser { get; set; }
         public Category()
         {
             Name = string.Empty;
