@@ -12,6 +12,8 @@
         public string InteriorNumber { get; set; }
         public Guid CreatedByUserId { get; set; }
         public DateTime CreatedAt { get; set; }
+        public ApplicationUser? CreatedByUser { get; set; }
+
 
         public Location()
         {

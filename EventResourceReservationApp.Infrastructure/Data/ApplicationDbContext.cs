@@ -46,6 +46,9 @@ namespace EventResourceReservationApp.Infrastructure.Data
                 entity.Property(e => e.InteriorNumber).HasMaxLength(50);
                 entity.Property(e => e.CreatedByUserId).IsRequired();
                 entity.Property(e => e.CreatedAt).IsRequired();
+                entity.HasOne<ApplicationUser>()
+                      .WithMany()
+                      .HasForeignKey(e => e.CreatedByUserId);
             });
             modelBuilder.Entity<ReservationCarItem>(entity =>
             {
