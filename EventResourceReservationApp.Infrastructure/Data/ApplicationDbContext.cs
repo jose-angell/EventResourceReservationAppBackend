@@ -15,6 +15,7 @@ namespace EventResourceReservationApp.Infrastructure.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<ReservationCarItem> ReservationCarItems { get; set; }
         public DbSet<Review> Reviews { get; set; }  
+        public DbSet<Resource> Resources { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -68,6 +69,30 @@ namespace EventResourceReservationApp.Infrastructure.Data
                 entity.Property(e => e.Rating).IsRequired();
                 entity.Property(e => e.Comment).IsRequired().HasMaxLength(1000);
                 entity.Property(e => e.CreatedAt).IsRequired();
+            });
+            modelBuilder.Entity<Resource>(entity =>
+            {
+                entity.ToTable("Resources");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.CategoryId).IsRequired();
+                entity.Property(e => e.StatusId).IsRequired();
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(1000);
+                entity.Property(e => e.Description).IsRequired().HasMaxLength(2000);
+                entity.Property(e => e.Quantity).IsRequired();
+                entity.Property(e => e.Price).IsRequired().HasColumnType("decimal(18,2)");
+                entity.Property(e => e.AuthorizationType).IsRequired();
+                entity.Property(e => e.LocationId).IsRequired();
+                entity.Property(e => e.CreatedByUserId).IsRequired();
+                entity.Property(e => e.CreatedAt).IsRequired();
+                entity.HasOne<ApplicationUser>()
+                      .WithMany()
+                      .HasForeignKey(e => e.CreatedByUserId);
+                entity.HasOne<Category>()
+                      .WithMany()
+                      .HasForeignKey(e => e.CategoryId);
+                entity.HasOne<Location>()
+                        .WithMany()
+                        .HasForeignKey(e => e.LocationId);
             });
         }
     }
