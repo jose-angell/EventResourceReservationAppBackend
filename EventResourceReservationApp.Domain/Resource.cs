@@ -9,7 +9,7 @@ namespace EventResourceReservationApp.Domain
     public class Resource
     {
         public Guid Id { get; set; }
-        public Guid CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public Category? Category { get; set; }
         public int StatusId { get; set; }
         public string Name { get; set; }
@@ -17,7 +17,7 @@ namespace EventResourceReservationApp.Domain
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public int AuthorizationType { get; set; }
-        public Guid LocationId { get; set; }
+        public int LocationId { get; set; }
         public Location? Location { get; set; }
         public Guid CreatedByUserId { get; set; }
         public ApplicationUser? CreatedByUser { get; set; }
@@ -28,10 +28,10 @@ namespace EventResourceReservationApp.Domain
             Name = string.Empty;
             Description = string.Empty;
         }
-        public Resource(Guid categoryId, string name, string description, int quantity, decimal price,
-            int authorizationType, Guid locationId, Guid createdByUserId)
+        public Resource(int categoryId, string name, string description, int quantity, decimal price,
+            int authorizationType, int locationId, Guid createdByUserId)
         {
-            if (categoryId == Guid.Empty)
+            if (categoryId == 0)
             {
                 throw new ArgumentException("CategoryId cannot be empty.", nameof(categoryId));
             }
@@ -55,7 +55,7 @@ namespace EventResourceReservationApp.Domain
             {
                 throw new ArgumentException("AuthorizationType cannot be negative.", nameof(authorizationType));
             }
-            if (locationId == Guid.Empty)
+            if (locationId == 0)
             {
                 throw new ArgumentException("LocationId cannot be empty.", nameof(locationId));
             }
@@ -75,10 +75,10 @@ namespace EventResourceReservationApp.Domain
             CreatedByUserId = createdByUserId;
             CreatedAt = DateTime.UtcNow;
         }
-        public void Update(Guid categoryId, int statud, string name, string description, int quantity, decimal price,
-            int authorizationType, Guid locationId)
+        public void Update(int categoryId, int statud, string name, string description, int quantity, decimal price,
+            int authorizationType, int locationId)
         {
-            if (categoryId == Guid.Empty)
+            if (categoryId == 0)
             {
                 throw new ArgumentException("CategoryId cannot be empty.", nameof(categoryId));
             }
@@ -102,7 +102,7 @@ namespace EventResourceReservationApp.Domain
             {
                 throw new ArgumentException("AuthorizationType cannot be negative.", nameof(authorizationType));
             }
-            if (locationId == Guid.Empty)
+            if (locationId == 0)
             {
                 throw new ArgumentException("LocationId cannot be empty.", nameof(locationId));
             }
