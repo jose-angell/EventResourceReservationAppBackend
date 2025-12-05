@@ -8,7 +8,7 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
 {
     public class ResourceResponse
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public int StatusId { get; set; }
         public string StatusDescription { get; set; }
         public string Name { get; set; }
