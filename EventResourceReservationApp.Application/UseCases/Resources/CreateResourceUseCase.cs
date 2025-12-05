@@ -27,7 +27,7 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
                 .GetFirstOrDefaultAsync(r => r.Name.ToLower() == request.Name.ToLower() && r.LocationId == request.LocationId);
             if (existingResource != null)
             {
-                _logger.LogWarning("Fallo al crear recurso: Ya existe un recurso con el nombre '{ResourceName}' en la ubicación '{LocationId}'.", request.Name, request.LocationId);
+                _logger.LogWarning($"Fallo al crear recurso: Ya existe un recurso con el nombre '{request.Name}' en la ubicación '{request.LocationId}'.");
                 return OperationResult<ResourceResponse>.Failure(
                     $"Ya existe un recurso con el nombre '{request.Name}' en la ubicación especificada.",
                     "Conflict",

@@ -10,6 +10,8 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
 {
     public class UpdateResourceRequest
     {
+        [Required(ErrorMessage = "El ID del recurso es obligatorio.")]
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "El ID de la categoría es obligatorio.")]
         public int CategoryId { get; set; }
         [Required(ErrorMessage = "El ID del estado es obligatorio.")]
