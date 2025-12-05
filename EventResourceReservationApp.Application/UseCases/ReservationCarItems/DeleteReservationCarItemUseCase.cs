@@ -32,7 +32,7 @@ namespace EventResourceReservationApp.Application.UseCases.ReservationCarItems
             }
             try
             {
-                await _unitOfWork.ReservationCarItems.RemoveASync(existingItem);
+                await _unitOfWork.ReservationCarItems.RemoveAsync(existingItem);
                 await _unitOfWork.SaveAsync();
                 return OperationResult.Success("Elemento eliminado exitosamente.");
             }

@@ -28,7 +28,7 @@ namespace EventResourceReservationApp.Application.UseCases.Reviews
             }
             try
             {
-                _unitOfWork.Reviews.RemoveASync(reviewExisting);
+                await _unitOfWork.Reviews.RemoveAsync(reviewExisting);
                 await _unitOfWork.SaveAsync();
                 return OperationResult.Success("Reseña eliminada exitosamente.");
             }

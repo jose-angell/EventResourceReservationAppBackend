@@ -30,13 +30,13 @@ namespace EventResourceReservationApp.Application.UseCases.Categories
                 //validar que no tenga recursos asociados
                 //TODO: crear la validacion de busqueda de recursos asociados a la categoria, y solo eliminar si no tiene 
                 // ningun recurso asociado
-                await _unitOfWork.Categories.RemoveASync(deleteCategory);
+                await _unitOfWork.Categories.RemoveAsync(deleteCategory);
                 await _unitOfWork.SaveAsync();
                 return OperationResult.Success("Categoría eliminada exitosamente.");
             }
             catch (PersistenceException pEx)
             {
-                _logger.LogError(pEx, "Fallo al actualizar la categoría debido a un error de persistencia.");
+                _logger.LogError(pEx, "Fallo al eliminar la categoría debido a un error de persistencia.");
                 return OperationResult.Failure("No se pudo eliminar la categoría de la base de datos.",
                     "PersistenceError",
                     "La operación de eliminación falló debido a un problema de almacenamiento de datos."

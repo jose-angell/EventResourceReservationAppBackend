@@ -32,7 +32,7 @@ namespace EventResourceReservationApp.Application.UseCases.Locations
             }
             try
             {
-                await _unitOfWork.Locations.RemoveASync(deleteLocation);
+                await _unitOfWork.Locations.RemoveAsync(deleteLocation);
                 await _unitOfWork.SaveAsync();
                 return OperationResult.Success("Ubicación eliminada exitosamente.");
             }
