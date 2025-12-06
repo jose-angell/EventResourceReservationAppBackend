@@ -79,7 +79,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
             }
         }
 
-        public async Task RemoveASync(T entity)
+        public async Task RemoveAsync(T entity)
         {
             _dbSet.Remove(entity);
             await Task.CompletedTask;
