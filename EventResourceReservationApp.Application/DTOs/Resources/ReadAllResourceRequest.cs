@@ -9,6 +9,7 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
 {
     public class ReadAllResourceRequest
     {
+        public string? Name { get; set; }
         [Required(ErrorMessage = "La fecha de inicio es obligatoria.")]
         public DateTime? StartTime { get; set; }
         [Required(ErrorMessage = "La fecha de fin es obligatoria.")]

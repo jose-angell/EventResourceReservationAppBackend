@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -30,6 +31,27 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
         {
             _context.Resources.Update(resource);
             await Task.CompletedTask;
+        }
+
+        public async Task<IEnumerable<Resource?>> GetAllAsync(Expression<Func<Resource, bool>> filter, DateTime star, DateTime end)
+        {
+            IQueryable<Resource> query = _dbSet;
+            query = query.Where(filter);
+            return await query
+                .Include(r => r.CreatedByUser)
+                .Include(r => r.Location)
+                .Include(r => r.Category).ToListAsync();
+            /*TODO: Implementar el caldulo de sumar las cantidades de las reservas activas en el rango de fechas proporcionado
+             * QuantityInUse = resource.Reservations // Accede a la colección de Reservas (si la tienes)
+                .Where(reservation =>
+                    // Condición 1: La reserva debe iniciar antes de que termine el rango SOLICITADO
+                    reservation.StartDate < endDate && 
+                    // Condición 2: La reserva debe terminar después de que inicie el rango SOLICITADO
+                    reservation.EndDate > startDate
+                )
+                .Sum(reservation => (int?)reservation.Quantity) ?? 0 
+                // Usamos (int?) para manejar el caso de que la suma sea NULL (0 reservas)
+             */
         }
     }
 }

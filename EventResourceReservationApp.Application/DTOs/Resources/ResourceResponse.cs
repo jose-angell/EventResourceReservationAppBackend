@@ -16,6 +16,7 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
         public decimal Price { get; set; }
         public int Quantity { get; set; } // Total quantity available
         public int QuantityInUse { get; set; } // Quantity currently reserved or in use
+        public int AvailableQuantity => Quantity - QuantityInUse;
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public int LocationId { get; set; }
