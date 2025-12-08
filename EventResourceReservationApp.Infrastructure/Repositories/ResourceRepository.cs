@@ -1,4 +1,5 @@
-﻿using EventResourceReservationApp.Application.Repositories;
+﻿using EventResourceReservationApp.Application.DTOs.Resources;
+using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
 using EventResourceReservationApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -33,25 +34,36 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
             await Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<Resource?>> GetAllAsync(Expression<Func<Resource, bool>> filter, DateTime star, DateTime end)
+        public async Task<IEnumerable<ResourceResponse?>> GetAllAsync(Expression<Func<Resource, bool>> filter, DateTime star, DateTime end)
         {
-            IQueryable<Resource> query = _dbSet;
-            query = query.Where(filter);
-            return await query
+            return await _context.Resources.Where(filter)
                 .Include(r => r.CreatedByUser)
                 .Include(r => r.Location)
-                .Include(r => r.Category).ToListAsync();
-            /*TODO: Implementar el caldulo de sumar las cantidades de las reservas activas en el rango de fechas proporcionado
-             * QuantityInUse = resource.Reservations // Accede a la colección de Reservas (si la tienes)
-                .Where(reservation =>
-                    // Condición 1: La reserva debe iniciar antes de que termine el rango SOLICITADO
-                    reservation.StartDate < endDate && 
-                    // Condición 2: La reserva debe terminar después de que inicie el rango SOLICITADO
-                    reservation.EndDate > startDate
-                )
-                .Sum(reservation => (int?)reservation.Quantity) ?? 0 
-                // Usamos (int?) para manejar el caso de que la suma sea NULL (0 reservas)
-             */
+                .Include(r => r.Category)
+                .Select(resource => new ResourceResponse
+                {
+                    Id = resource.Id,
+                    StatusId = resource.StatusId,
+                    StatusDescription = "",
+                    Name = resource.Name,
+                    Description = resource.Description,
+                    Price = resource.Price,
+                    Quantity = resource.Quantity,
+                    QuantityInUse = 0, // Aquí debes implementar la lógica para calcular la cantidad en uso
+                    //QuantityInUse = resource.Reservations // Asumiendo que Resource tiene ICollection<Reservation>
+                    //.Where(reservation =>
+                    //    reservation.StartDate < endDate &&
+                    //    reservation.EndDate > startDate
+                    //)
+                    //.Sum(reservation => (int?)reservation.Quantity) ?? 0,
+                    CategoryId = resource.CategoryId,
+                    CategoryName = resource.Category != null ? resource.Category.Name : "",
+                    LocationId = resource.LocationId,
+                    LocationDescription = resource.Location != null ? resource.Location.City : "",
+                    AuthorizationType = resource.AuthorizationType,
+                    Created = resource.CreatedAt
+                })
+                .ToListAsync();
         }
     }
 }
