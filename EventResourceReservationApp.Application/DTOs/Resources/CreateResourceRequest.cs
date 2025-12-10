@@ -15,12 +15,15 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
         [Required(ErrorMessage = "El ID del estado es obligatorio.")]
         public int StatusId { get; set; }
         [Required(ErrorMessage = "El nombre es obligatorio.")]
+        [Range(1, 200, ErrorMessage = "El nombre debe tener entre 1 y 200 caracteres.")]
         public string Name { get; set; }
         [Required(ErrorMessage = "La descripción es obligatoria.")]
+        [Range(1, 2000, ErrorMessage = "La descripción debe tener entre 1 y 2000 caracteres.")]
         public string Description { get; set; }
         [Required(ErrorMessage = "La cantidad es obligatoria.")]
         public int Quantity { get; set; }
         [Required(ErrorMessage = "El precio es obligatorio.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "El precio debe ser mayor que cero.")]
         public decimal Price { get; set; }
         [Required(ErrorMessage = "El tipo de autorización es obligatorio.")]
         public int AuthorizationType { get; set; }

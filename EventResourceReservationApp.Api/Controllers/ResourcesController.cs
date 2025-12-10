@@ -116,7 +116,7 @@ namespace EventResourceReservationApp.Api.Controllers
             }
             return this.HandleOperationError(result);
         }
-        [HttpGet("DateRange/{id}")]
+        [HttpGet("date-range/{id}")]
         public async Task<IActionResult> ReadByIdAndDateRangeResource([FromRoute] Guid id, ReadByIdAndDateRangeResourceRequest request)
         {
             if (id == Guid.Empty)
