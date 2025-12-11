@@ -10,7 +10,7 @@ namespace EventResourceReservationApp.Application.Repositories
     public interface IRepository<T> where T : class
     {
         Task AddAsync(T entity);
-        Task RemoveASync(T entity);
+        Task RemoveAsync(T entity);
         Task RemoveRangeAsync(IEnumerable<T> entities);
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,

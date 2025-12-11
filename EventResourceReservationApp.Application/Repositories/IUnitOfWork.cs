@@ -12,6 +12,7 @@ namespace EventResourceReservationApp.Application.Repositories
         ILocationRepository Locations { get; }
         IReservationCarItemRepository ReservationCarItems { get; }
         IReviewRepository Reviews { get; }
+        IResourceRepository Resources { get; }
         Task SaveAsync();
     }
 }
