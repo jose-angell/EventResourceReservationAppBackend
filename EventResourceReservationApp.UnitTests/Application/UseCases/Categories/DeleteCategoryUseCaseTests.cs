@@ -34,7 +34,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Categories
             var categoriaId = 1;
             _mockCategoryRepository.Setup(r => r.GetByIdAsync(categoriaId))
                 .ReturnsAsync(new Category { Id = categoriaId, Name = "Name Category", Description = "Description Category" });
-            _mockCategoryRepository.Setup(r => r.RemoveASync(It.IsAny<Category>()));
+            _mockCategoryRepository.Setup(r => r.RemoveAsync(It.IsAny<Category>()));
             _mockUnitOfWork.Setup(u => u.SaveAsync())
                                 .Returns(Task.CompletedTask);
             //Act
@@ -44,7 +44,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Categories
             Assert.True(result.IsSuccess);
             Assert.Equal("Categoría eliminada exitosamente.", result.Message);
 
-            _mockCategoryRepository.Verify(r => r.RemoveASync(It.IsAny<Category>()), Times.Once);
+            _mockCategoryRepository.Verify(r => r.RemoveAsync(It.IsAny<Category>()), Times.Once);
             _mockUnitOfWork.Verify(u => u.SaveAsync(), Times.Once);
         }
         [Fact]
@@ -60,7 +60,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Categories
             Assert.False(result.IsSuccess);
             Assert.Equal("NotFound", result.ErrorCode);
             Assert.Equal("La operación de eliminación falló porque la categoría no existe.", result.Message);
-            _mockCategoryRepository.Verify(r => r.RemoveASync(It.IsAny<Category>()), Times.Never);
+            _mockCategoryRepository.Verify(r => r.RemoveAsync(It.IsAny<Category>()), Times.Never);
             _mockUnitOfWork.Verify(u => u.SaveAsync(), Times.Never);
         }
         [Fact]
@@ -70,7 +70,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Categories
             var categoriaId = 1;
             _mockCategoryRepository.Setup(r => r.GetByIdAsync(categoriaId))
                 .ReturnsAsync(new Category { Id = categoriaId, Name = "Name Category", Description = "Description Category" });
-            _mockCategoryRepository.Setup(r => r.RemoveASync(It.IsAny<Category>()));
+            _mockCategoryRepository.Setup(r => r.RemoveAsync(It.IsAny<Category>()));
             _mockUnitOfWork.Setup(u => u.SaveAsync())
                                .ThrowsAsync(new PersistenceException("Simulated database error."));
             // Act
@@ -80,7 +80,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Categories
             Assert.False(result.IsSuccess);
             Assert.Equal("La operación de eliminación falló debido a un problema de almacenamiento de datos.", result.Message);
 
-            _mockCategoryRepository.Verify(r => r.RemoveASync(It.IsAny<Category>()), Times.Once);
+            _mockCategoryRepository.Verify(r => r.RemoveAsync(It.IsAny<Category>()), Times.Once);
             _mockUnitOfWork.Verify(u => u.SaveAsync(), Times.Once);
         }
     }

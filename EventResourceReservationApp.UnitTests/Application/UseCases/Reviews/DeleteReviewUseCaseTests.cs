@@ -42,7 +42,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reviews
             };
             _reviewRepository.Setup(r => r.GetById(reviewId))
                 .ReturnsAsync(review);
-            _mockUnitOfWork.Setup(u => u.Reviews.RemoveASync(review))
+            _mockUnitOfWork.Setup(u => u.Reviews.RemoveAsync(review))
                 .Returns(Task.CompletedTask);
             _mockUnitOfWork.Setup(u => u.SaveAsync())
                 .Returns(Task.CompletedTask);
@@ -97,7 +97,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reviews
             };
             _reviewRepository.Setup(r => r.GetById(reviewId))
                 .ReturnsAsync(review);
-            _mockUnitOfWork.Setup(u => u.Reviews.RemoveASync(review))
+            _mockUnitOfWork.Setup(u => u.Reviews.RemoveAsync(review))
                 .Returns(Task.CompletedTask);
             _mockUnitOfWork.Setup(u => u.SaveAsync()).ThrowsAsync(new PersistenceException("Database error"));
             // Act 
@@ -130,7 +130,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reviews
             };
             _reviewRepository.Setup(r => r.GetById(reviewId))
                 .ReturnsAsync(review);
-            _mockUnitOfWork.Setup(u => u.Reviews.RemoveASync(review))
+            _mockUnitOfWork.Setup(u => u.Reviews.RemoveAsync(review))
                 .Returns(Task.CompletedTask);
             _mockUnitOfWork.Setup(u => u.SaveAsync()).ThrowsAsync(new Exception("Database error"));
             // Act 

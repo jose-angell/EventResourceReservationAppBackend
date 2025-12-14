@@ -16,6 +16,7 @@ namespace EventResourceReservationApp.Infrastructure.Data
         public DbSet<ReservationCarItem> ReservationCarItems { get; set; }
         public DbSet<Review> Reviews { get; set; }  
         public DbSet<Resource> Resources { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -90,6 +91,32 @@ namespace EventResourceReservationApp.Infrastructure.Data
                 entity.HasOne<Category>()
                       .WithMany()
                       .HasForeignKey(e => e.CategoryId);
+                entity.HasOne<Location>()
+                        .WithMany()
+                        .HasForeignKey(e => e.LocationId);
+            });
+            modelBuilder.Entity<Reservation>(entity =>
+            {
+                entity.ToTable("Reservations");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.StartTime).IsRequired();
+                entity.Property(e => e.EndTime).IsRequired();
+                entity.Property(e => e.StatusId).IsRequired();
+                entity.Property(e => e.TotalAmount).IsRequired().HasColumnType("decimal(18,2)");
+                entity.Property(e => e.ClientComment).IsRequired().HasMaxLength(2000);
+                entity.Property(e => e.ClientPhoneNumber).IsRequired().HasMaxLength(20);
+                entity.Property(e => e.LocationId).IsRequired();
+                entity.Property(e => e.ClientId).IsRequired();
+                entity.Property(e => e.CreatedAt).IsRequired();
+                entity.Property(e => e.AdminId).IsRequired(false);
+                entity.Property(e => e.AdminComment).IsRequired(false).HasMaxLength(2000);
+                entity.Property(e => e.TransactionId);
+                entity.HasOne<ApplicationUser>()
+                      .WithMany()
+                      .HasForeignKey(e => e.ClientId);
+                entity.HasOne<ApplicationUser>()
+                      .WithMany()
+                      .HasForeignKey(e => e.AdminId);
                 entity.HasOne<Location>()
                         .WithMany()
                         .HasForeignKey(e => e.LocationId);

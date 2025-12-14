@@ -39,7 +39,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
             var existingLocation = new Location("Test Country", "Test City", 12345, "Test Street", "Test Neighborhood", "123", "A", Guid.NewGuid());
             _mockLocationRepository.Setup(r => r.GetByIdAsync(locationId))
                 .ReturnsAsync(existingLocation);
-            _mockLocationRepository.Setup(r => r.RemoveASync(existingLocation))
+            _mockLocationRepository.Setup(r => r.RemoveAsync(existingLocation))
                 .Returns(Task.CompletedTask);
             _mockUnitOfWork.Setup(u => u.SaveAsync()).Returns(Task.CompletedTask);
 
@@ -49,7 +49,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
             Assert.True(result.IsSuccess);
             Assert.Equal("Ubicación eliminada exitosamente.", result.Message);
 
-            _mockLocationRepository.Verify(r => r.RemoveASync(existingLocation), Times.Once);
+            _mockLocationRepository.Verify(r => r.RemoveAsync(existingLocation), Times.Once);
             _mockUnitOfWork.Verify(u => u.SaveAsync(), Times.Once);
             _mockLogger.Verify(x => x.Log(
                 It.IsAny<LogLevel>(),
@@ -89,7 +89,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Locations
             var existingLocation = new Location("Test Country", "Test City", 12345, "Test Street", "Test Neighborhood", "123", "A", Guid.NewGuid());
             _mockLocationRepository.Setup(r => r.GetByIdAsync(locationId))
                 .ReturnsAsync(existingLocation);
-            _mockLocationRepository.Setup(r => r.RemoveASync(existingLocation)).ThrowsAsync(new PersistenceException("Error al guardar en la base de datos."));
+            _mockLocationRepository.Setup(r => r.RemoveAsync(existingLocation)).ThrowsAsync(new PersistenceException("Error al guardar en la base de datos."));
 
             // Act
             var result = await _useCase.ExecuteAsync(locationId);

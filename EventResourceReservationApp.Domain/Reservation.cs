@@ -20,10 +20,11 @@ namespace EventResourceReservationApp.Domain
         public Guid ClientId { get; set; }
         public ApplicationUser? Client { get; set; }
         public DateTime CreatedAt { get; set; }
-        public Guid AdminId { get; set; }
+        public Guid? AdminId { get; set; }
         public ApplicationUser? Admin { get; set; }
-        public string AdminComment { get; set; }
+        public string? AdminComment { get; set; }
         public Guid TransactionId { get; set; }
+        public ICollection<ReservationCarItem>? ReservationItems { get; set; }
         public Reservation()
         {
             ClientComment = string.Empty;
