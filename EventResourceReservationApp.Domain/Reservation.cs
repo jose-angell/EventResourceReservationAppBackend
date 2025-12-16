@@ -24,7 +24,7 @@ namespace EventResourceReservationApp.Domain
         public ApplicationUser? Admin { get; set; }
         public string? AdminComment { get; set; }
         public Guid TransactionId { get; set; }
-        public ICollection<ReservationCarItem>? ReservationItems { get; set; }
+        //public ICollection<ReservationDetail? ReservationDetail { get; set; }
         public Reservation()
         {
             ClientComment = string.Empty;

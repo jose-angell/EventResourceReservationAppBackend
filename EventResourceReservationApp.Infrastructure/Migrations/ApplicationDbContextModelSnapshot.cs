@@ -268,6 +268,9 @@ namespace EventResourceReservationApp.Infrastructure.Migrations
                     b.Property<int?>("LocationId1")
                         .HasColumnType("integer");
 
+                    b.Property<Guid?>("ResourceId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp with time zone");
 
@@ -294,6 +297,8 @@ namespace EventResourceReservationApp.Infrastructure.Migrations
 
                     b.HasIndex("LocationId1");
 
+                    b.HasIndex("ResourceId");
+
                     b.ToTable("Reservations", (string)null);
                 });
 
@@ -312,15 +317,10 @@ namespace EventResourceReservationApp.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("ReservationId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("ResourceId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ReservationId");
 
                     b.ToTable("ReservationCarItems", (string)null);
                 });
@@ -582,18 +582,15 @@ namespace EventResourceReservationApp.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("LocationId1");
 
+                    b.HasOne("EventResourceReservationApp.Domain.Resource", null)
+                        .WithMany("Reservations")
+                        .HasForeignKey("ResourceId");
+
                     b.Navigation("Admin");
 
                     b.Navigation("Client");
 
                     b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("EventResourceReservationApp.Domain.ReservationCarItem", b =>
-                {
-                    b.HasOne("EventResourceReservationApp.Domain.Reservation", null)
-                        .WithMany("ReservationItems")
-                        .HasForeignKey("ReservationId");
                 });
 
             modelBuilder.Entity("EventResourceReservationApp.Domain.Resource", b =>
@@ -686,9 +683,9 @@ namespace EventResourceReservationApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EventResourceReservationApp.Domain.Reservation", b =>
+            modelBuilder.Entity("EventResourceReservationApp.Domain.Resource", b =>
                 {
-                    b.Navigation("ReservationItems");
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }
