@@ -23,7 +23,7 @@ namespace EventResourceReservationApp.Domain
         public Guid? AdminId { get; set; }
         public ApplicationUser? Admin { get; set; }
         public string? AdminComment { get; set; }
-        public Guid TransactionId { get; set; }
+        public Guid? TransactionId { get; set; }
         //public ICollection<ReservationDetail? ReservationDetail { get; set; }
         public Reservation()
         {
