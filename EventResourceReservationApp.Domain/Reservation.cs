@@ -31,16 +31,12 @@ namespace EventResourceReservationApp.Domain
             ClientPhoneNumber = string.Empty;
             AdminComment = string.Empty;
         }
-        public Reservation(DateTime startTime, DateTime endTime, int statusId, decimal totalAmount, 
+        public Reservation(DateTime startTime, DateTime endTime, decimal totalAmount, 
             string? clientComment, string clientPhoneNumber, int locationId, Guid clientId)
         {
             if(startTime >= endTime)
             {
                 throw new ArgumentException("StartTime must be earlier than EndTime.", nameof(startTime));
-            }
-            if( statusId <= 0)
-            {
-                throw new ArgumentException("StatusId cannot be empty.", nameof(statusId));
             }
             if(totalAmount <= 0)
             {
@@ -60,7 +56,7 @@ namespace EventResourceReservationApp.Domain
             }
             StartTime = startTime;
             EndTime = endTime;
-            StatusId = statusId;
+            StatusId = 1;
             TotalAmount = totalAmount;
             ClientComment = clientComment ?? string.Empty;
             ClientPhoneNumber = clientPhoneNumber;
