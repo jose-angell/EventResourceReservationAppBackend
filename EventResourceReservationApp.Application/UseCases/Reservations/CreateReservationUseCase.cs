@@ -67,7 +67,7 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
             {
                 _logger.LogError(500, ex, "Fallo inesperado al crear la reserfva.");
                 return OperationResult<ReservationResponse>.Failure(
-                   "Ocurrió un error inesperado durante la creación de a reserva.",
+                   "Ocurrió un error inesperado durante la creación de la reserva.",
                     "UnexpectedError",
                     "La operación de creación falló debido a un error inesperado."
                 );
