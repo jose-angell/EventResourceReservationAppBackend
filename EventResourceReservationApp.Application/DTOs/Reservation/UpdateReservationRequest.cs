@@ -9,6 +9,8 @@ namespace EventResourceReservationApp.Application.DTOs.Reservation
 {
     public class UpdateReservationRequest
     {
+        [Required(ErrorMessage = "EL Id es requerido")]
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "La fecha de inicio es requerida")]
         public DateTime StartTime { get; set; }
         [Required(ErrorMessage = "La fecha fin es requerida")]
@@ -20,5 +22,6 @@ namespace EventResourceReservationApp.Application.DTOs.Reservation
         public string ClientPhoneNumber { get; set; }
         [Required(ErrorMessage = "La ubicación es requerida")]
         public int LocationId { get; set; }
+        public int StatusId { get; set; }
     }
 }
