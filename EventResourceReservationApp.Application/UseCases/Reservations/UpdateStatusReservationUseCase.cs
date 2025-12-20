@@ -1,7 +1,6 @@
 ﻿using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.DTOs.Reservation;
 using EventResourceReservationApp.Application.Repositories;
-using EventResourceReservationApp.Domain;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace EventResourceReservationApp.Application.UseCases.Reservations
 {
-    public class UpdateReservationUseCase
+    public class UpdateStatusReservationUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<UpdateReservationUseCase> _logger;
-        public UpdateReservationUseCase(IUnitOfWork unitOfWork, ILogger<UpdateReservationUseCase> logger)
+        private readonly ILogger<UpdateStatusReservationUseCase> _logger;   
+        public UpdateStatusReservationUseCase(IUnitOfWork unitOfWork, ILogger<UpdateStatusReservationUseCase> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
-        public async Task<OperationResult> ExecuteAsync(UpdateReservationRequest request)
+        public async Task<OperationResult> ExecuteAsync(UpdateStatusReservationRequest request)
         {
             try
             {
@@ -34,11 +33,10 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
                         $"La operación de edición falló debido a que no se encontró la reserva con Id '{request.Id}'."
                     );
                 }
-                updateReservation.Update(request.StartTime, request.EndTime,request.StatusId, request.TotalAmount,
-                    request.ClientComment, request.ClientPhoneNumber, request.LocationId);
+                updateReservation.UpdateStatus(request.StatusId, request.AdminId, request.AdminComment);
                 await _unitOfWork.Reservations.Update(updateReservation);
                 await _unitOfWork.SaveAsync();
-                return OperationResult.Success("Reserva editada exitosamente.");
+                return OperationResult.Success("Reserva editada exitosamente.");    
             }
             catch (ArgumentException argEx)
             {

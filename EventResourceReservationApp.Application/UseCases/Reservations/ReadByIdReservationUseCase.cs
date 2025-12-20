@@ -41,7 +41,7 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
                     ClientPhoneNumber = reservation.Client.PhoneNumber,
                     StartTime = reservation.StartTime,
                     EndTime = reservation.EndTime,
-                    Quantity = 0,
+                    Quantity = 0, //TODO es la cantidad de recursos reservados contar solo dos tipos
                     TotalAmount = reservation.TotalAmount,
                     StatusId = reservation.StatusId,
                     Status = ""
