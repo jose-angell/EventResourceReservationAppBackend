@@ -19,7 +19,11 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
         }
         public async Task<Reservation> GetByIdAsync(Guid id)
         {
-            return await _context.Reservations.FindAsync(id); // Filtrar por Id
+            return await _context.Reservations
+                .Include(r => r.Client) // Incluir el usuario que creó el recurso
+                .Include(r => r.Location) // Incluir la ubicación del recurso
+                .Include(r => r.Admin) 
+                .FirstOrDefaultAsync(r => r.Id == id); // Filtrar por Id
         }
         public async Task Update(Reservation reservation)
         {
