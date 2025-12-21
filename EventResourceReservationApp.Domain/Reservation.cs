@@ -110,23 +110,17 @@ namespace EventResourceReservationApp.Domain
             AdminId = adminId;
             AdminComment = adminComment ?? string.Empty;
         }
-        public void UpdateTransaction(int statusId, Guid adminId, string adminComment, Guid transactionId)
+        public void UpdateTransaction(int statusId, Guid transactionId)
         {
             if (statusId <= 0)
             {
                 throw new ArgumentException("StatusId cannot be empty.", nameof(statusId));
-            }
-            if (adminId == Guid.Empty)
-            {
-                throw new ArgumentException("AdminId cannot be empty.", nameof(adminId));
             }
             if (transactionId == Guid.Empty)
             {
                 throw new ArgumentException("TransactionId cannot be empty.", nameof(transactionId));
             }
             StatusId = statusId;
-            AdminId = adminId;
-            AdminComment = adminComment ?? string.Empty;
             TransactionId = transactionId;
         }
 
