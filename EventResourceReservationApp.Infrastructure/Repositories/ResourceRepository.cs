@@ -34,7 +34,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
             await Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<ResourceResponse?>> GetAllAsync(Expression<Func<Resource, bool>> filter, DateTime star, DateTime end)
+        public async Task<IEnumerable<ResourceResponse?>> GetAllAsync(Expression<Func<Resource, bool>> filter, DateTime start, DateTime end)
         {
             return await _context.Resources.Where(filter)
                 .Include(r => r.CreatedByUser)
@@ -52,8 +52,8 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                     QuantityInUse = 0, // Aquí debes implementar la lógica para calcular la cantidad en uso
                     //QuantityInUse = resource.Reservations // Asumiendo que Resource tiene ICollection<Reservation>
                     //.Where(reservation =>
-                    //    reservation.StartDate < endDate &&
-                    //    reservation.EndDate > startDate
+                    //    reservation.StartTime < end &&
+                    //    reservation.EndTime > start
                     //)
                     //.Sum(reservation => (int?)reservation.Quantity) ?? 0,
                     CategoryId = resource.CategoryId,

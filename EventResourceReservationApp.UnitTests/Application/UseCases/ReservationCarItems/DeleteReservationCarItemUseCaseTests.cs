@@ -43,7 +43,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             };
             _mockReservationCarItemRepository.Setup(r => r.GetByIdAsync(Id))
                 .ReturnsAsync(existingItem);
-            _mockReservationCarItemRepository.Setup(r => r.RemoveASync(It.IsAny<ReservationCarItem>()))
+            _mockReservationCarItemRepository.Setup(r => r.RemoveAsync(It.IsAny<ReservationCarItem>()))
                 .Returns(Task.CompletedTask);
             _mockUnitOfWork.Setup(u => u.SaveAsync())
                 .Returns(Task.CompletedTask);
@@ -52,7 +52,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             // Assert
             Assert.True(result.IsSuccess);
             Assert.Equal("Elemento eliminado exitosamente.", result.Message);
-            _mockReservationCarItemRepository.Verify(r => r.RemoveASync(It.IsAny<ReservationCarItem>()), Times.Once);
+            _mockReservationCarItemRepository.Verify(r => r.RemoveAsync(It.IsAny<ReservationCarItem>()), Times.Once);
             _mockUnitOfWork.Verify(r => r.SaveAsync(), Times.Once);
             _mockLogger.Verify(x => x.Log(
                 It.IsAny<LogLevel>(),
@@ -77,7 +77,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             Assert.Equal("NotFound", result.ErrorCode);
             Assert.Equal("La operación de eliminación falló porque el elemento no existe.", result.Message);
 
-            _mockReservationCarItemRepository.Verify(r => r.RemoveASync(It.IsAny<ReservationCarItem>()), Times.Never);
+            _mockReservationCarItemRepository.Verify(r => r.RemoveAsync(It.IsAny<ReservationCarItem>()), Times.Never);
             _mockUnitOfWork.Verify(r => r.SaveAsync(), Times.Never);
             _mockLogger.Verify(
             x => x.Log(
@@ -101,7 +101,7 @@ namespace EventResourceReservationApp.UnitTests.Application.UseCases.Reservation
             };
             _mockReservationCarItemRepository.Setup(r => r.GetByIdAsync(Id))
                 .ReturnsAsync(existingItem);
-            _mockReservationCarItemRepository.Setup(r => r.RemoveASync(It.IsAny<ReservationCarItem>()))
+            _mockReservationCarItemRepository.Setup(r => r.RemoveAsync(It.IsAny<ReservationCarItem>()))
                 .Returns(Task.CompletedTask);
             _mockUnitOfWork.Setup(u => u.SaveAsync())
                 .ThrowsAsync(new PersistenceException("Database error"));
