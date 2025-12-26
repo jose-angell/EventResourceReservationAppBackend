@@ -17,7 +17,7 @@ namespace EventResourceReservationApp.Infrastructure.Data
         public DbSet<Review> Reviews { get; set; }  
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
-
+        public DbSet<ReservationDetail> ReservationDetails { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -120,6 +120,21 @@ namespace EventResourceReservationApp.Infrastructure.Data
                 entity.HasOne<Location>()
                         .WithMany()
                         .HasForeignKey(e => e.LocationId);
+            });
+            modelBuilder.Entity<ReservationDetail>(entity =>
+            {
+                entity.ToTable("ReservationDetails");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.ReservationId).IsRequired();
+                entity.Property(e => e.ResourceId).IsRequired();
+                entity.Property(e => e.Quantity).IsRequired();
+                entity.Property(e => e.UnitPrice).IsRequired().HasColumnType("decimal(18,2)");
+                entity.HasOne<Reservation>()
+                      .WithMany()
+                      .HasForeignKey(e => e.ReservationId);
+                entity.HasOne<Resource>()
+                      .WithMany()
+                      .HasForeignKey(e => e.ResourceId);
             });
         }
     }
