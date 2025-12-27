@@ -14,6 +14,7 @@ namespace EventResourceReservationApp.Application.Repositories
         IReviewRepository Reviews { get; }
         IResourceRepository Resources { get; }
         IReservationRepository Reservations { get; }
+        IReservationDetailRepository ReservationDetails { get; }
         Task SaveAsync();
     }
 }

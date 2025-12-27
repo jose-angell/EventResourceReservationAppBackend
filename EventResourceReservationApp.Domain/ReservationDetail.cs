@@ -15,7 +15,6 @@ namespace EventResourceReservationApp.Domain
         public Resource? Resource { get; set; } 
         public int Quantity { get; set; }   
         public decimal UnitPrice { get; set; }
-
         public DateTime Created { get; set; }
         public ReservationDetail()
         {
