@@ -66,7 +66,7 @@ namespace EventResourceReservationApp.Api
             services.AddTransient<UpdateReservationUseCase>();
             services.AddTransient<UpdateStatusReservationUseCase>();
             services.AddTransient<UpdateTransationReservationUseCase>();
-            services.AddTransient<DeleteResourceUseCase>();
+            services.AddTransient<DeleteReservationUseCase>();
 
 
             return services;

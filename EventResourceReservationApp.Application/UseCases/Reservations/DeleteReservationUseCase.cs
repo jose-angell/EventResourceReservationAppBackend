@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace EventResourceReservationApp.Application.UseCases.Reservations
 {
-    public class DeletedReservationUseCase
+    public class DeleteReservationUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<DeletedReservationUseCase> _logger;
-        public DeletedReservationUseCase(IUnitOfWork unitOfWork, ILogger<DeletedReservationUseCase> logger)
+        private readonly ILogger<DeleteReservationUseCase> _logger;
+        public DeleteReservationUseCase(IUnitOfWork unitOfWork, ILogger<DeleteReservationUseCase> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
@@ -50,7 +50,7 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
             }
             catch (Exception ex)
             {
-                _logger.LogError(500, ex, "Fallo inesperado al eliminar la reserfva.");
+                _logger.LogError(500, ex, "Fallo inesperado al eliminar la reserva.");
                 return OperationResult.Failure(
                    "Ocurrió un error inesperado durante la eliminación de la reserva.",
                     "UnexpectedError",
