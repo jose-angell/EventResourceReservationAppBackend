@@ -14,6 +14,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
         public IReviewRepository Reviews { get; private set; } 
         public IResourceRepository Resources { get; private set; }
         public IReservationRepository Reservations { get; private set; }
+        public IReservationDetailRepository ReservationDetails { get; private set; }
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -23,6 +24,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
             Reviews = new ReviewRepository(_context);
             Resources = new ResourceRepository(_context);
             Reservations = new ReservationRepository(_context);
+            ReservationDetails = new ReservationDetailRepository(_context);
         }
         public async Task SaveAsync()
         {

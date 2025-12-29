@@ -1,5 +1,5 @@
 ﻿using EventResourceReservationApp.Application.Common;
-using EventResourceReservationApp.Application.DTOs.Reservation;
+using EventResourceReservationApp.Application.DTOs.Reservations;
 using EventResourceReservationApp.Application.Repositories;
 using Microsoft.Extensions.Logging;
 using System;
@@ -59,7 +59,7 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
             }
             catch (Exception ex)
             {
-                _logger.LogError(500, ex, "Fallo inesperado al consultar la reserfva.");
+                _logger.LogError(500, ex, "Fallo inesperado al consultar la reserva.");
                 return OperationResult<ReservationResponse>.Failure(
                    "Ocurrió un error inesperado durante la consulta de la reserva.",
                     "UnexpectedError",
