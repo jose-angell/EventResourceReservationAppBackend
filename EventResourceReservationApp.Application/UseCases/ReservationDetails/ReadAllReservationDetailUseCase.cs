@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace EventResourceReservationApp.Application.UseCases.ReservationDetails
 {
-    public class ReadReservationDetailUseCase
+    public class ReadAllReservationDetailUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<ReadReservationDetailUseCase> _logger;
-        public ReadReservationDetailUseCase(IUnitOfWork unitOfWork, ILogger<ReadReservationDetailUseCase> logger)
+        private readonly ILogger<ReadAllReservationDetailUseCase> _logger;
+        public ReadAllReservationDetailUseCase(IUnitOfWork unitOfWork, ILogger<ReadAllReservationDetailUseCase> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
