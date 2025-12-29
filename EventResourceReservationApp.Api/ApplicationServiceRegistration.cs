@@ -1,6 +1,7 @@
 ﻿using EventResourceReservationApp.Application.UseCases.Categories;
 using EventResourceReservationApp.Application.UseCases.Locations;
 using EventResourceReservationApp.Application.UseCases.ReservationCarItems;
+using EventResourceReservationApp.Application.UseCases.ReservationDetails;
 using EventResourceReservationApp.Application.UseCases.Reservations;
 using EventResourceReservationApp.Application.UseCases.Resources;
 using EventResourceReservationApp.Application.UseCases.Reviews;
@@ -68,6 +69,12 @@ namespace EventResourceReservationApp.Api
             services.AddTransient<UpdateTransationReservationUseCase>();
             services.AddTransient<DeleteReservationUseCase>();
 
+            // Reservation Details
+            services.AddTransient<ReadAllReservationDetailUseCase>();
+            services.AddTransient<ReadByIdReservationDetailUseCase>();
+            services.AddTransient<CreateReservationDetailUseCase>();
+            services.AddTransient<UpdateReservationDetailUseCase>();
+            services.AddTransient<DeleteReservationDetailUseCase>();
 
             return services;
         }
