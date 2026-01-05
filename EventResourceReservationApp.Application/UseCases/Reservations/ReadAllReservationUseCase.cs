@@ -1,4 +1,5 @@
 ﻿using EventResourceReservationApp.Application.Common;
+using EventResourceReservationApp.Application.DTOs.ReservationDetails;
 using EventResourceReservationApp.Application.DTOs.Reservations;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
@@ -42,14 +43,25 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
                 {
                     Id = r.Id,
                     ClientId = r.ClientId,
-                    ClientName = r.Client.FirsName,
-                    ClientPhoneNumber = r.Client.PhoneNumber,
+                    ClientName = r.Client?.FirsName ?? "",
+                    ClientPhoneNumber = r.Client?.PhoneNumber ?? "",
                     StartTime = r.StartTime,
                     EndTime = r.EndTime,
-                    Quantity = 0, //TODO es la cantidad de recursos reservados contar solo dos tipos
+                    Quantity = r.ReservationDetail?.Count() ?? 0, 
                     TotalAmount = r.TotalAmount,
                     StatusId = r.StatusId,
-                    Status = ""
+                    Status = "",
+                    ReservationDetails = r.ReservationDetail?.Select(rd => new ReservationDetailsResponse
+                    {
+                        Id = rd.Id,
+                        ReservationId = rd.ReservationId,
+                        ResourceId = rd.ResourceId,
+                        ResourceName = rd.Resource?.Name,
+                        Quantity = rd.Quantity,
+                        UnitPrice = rd.UnitPrice,
+                        TotalPrice = rd.Quantity * rd.UnitPrice,
+                        Created = rd.Created
+                    })
                 });
                 return OperationResult<IEnumerable<ReservationResponse>>.Success(response, "Reservas consultadas exitosamente.");
             }
