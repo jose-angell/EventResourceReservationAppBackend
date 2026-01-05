@@ -36,7 +36,7 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
                             _ => q.OrderByDescending(r => r.CreatedAt),
                         };
                     },
-                    includeProperties: "Resource,Client,Admin"
+                    includeProperties: "Resource,Client,Admin,ReservationDetail"
                 );
                 var response = reservations.Select(r => new ReservationResponse
                 {

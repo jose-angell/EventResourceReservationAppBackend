@@ -20,6 +20,5 @@ namespace EventResourceReservationApp.Application.DTOs.Reservation
         public decimal TotalAmount { get; set; }
         public int StatusId { get; set; }
         public string Status { get; set; } = string.Empty;
-        
     }
 }
