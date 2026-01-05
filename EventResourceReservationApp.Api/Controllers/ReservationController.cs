@@ -1,5 +1,5 @@
 ﻿using EventResourceReservationApp.Api.Helpers;
-using EventResourceReservationApp.Application.DTOs.Reservation;
+using EventResourceReservationApp.Application.DTOs.Reservations;
 using EventResourceReservationApp.Application.UseCases.Reservations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -13,7 +13,7 @@ namespace EventResourceReservationApp.Api.Controllers
         private readonly CreateReservationUseCase _create;
         private readonly ReadAllReservationUseCase _readAll;
         private readonly ReadByIdReservationUseCase _readById;
-        private readonly DeletedReservationUseCase _delete;
+        private readonly DeleteReservationUseCase _delete;
         private readonly UpdateReservationUseCase _update;
         private readonly UpdateStatusReservationUseCase _updateStatus;
         private readonly UpdateTransationReservationUseCase _updateTransaction;
@@ -22,7 +22,7 @@ namespace EventResourceReservationApp.Api.Controllers
             CreateReservationUseCase create,
             ReadAllReservationUseCase readAll,
             ReadByIdReservationUseCase readById,
-            DeletedReservationUseCase delete,
+            DeleteReservationUseCase delete,
             UpdateReservationUseCase update,
             UpdateStatusReservationUseCase updateStatus,
             UpdateTransationReservationUseCase updateTransaction)

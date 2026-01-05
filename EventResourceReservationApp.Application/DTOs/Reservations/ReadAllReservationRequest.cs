@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventResourceReservationApp.Application.DTOs.Reservation
+namespace EventResourceReservationApp.Application.DTOs.Reservations
 {
     public class ReadAllReservationRequest
     {
