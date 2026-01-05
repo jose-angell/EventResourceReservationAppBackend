@@ -120,6 +120,9 @@ namespace EventResourceReservationApp.Infrastructure.Data
                 entity.HasOne<Location>()
                         .WithMany()
                         .HasForeignKey(e => e.LocationId);
+                entity.HasMany<ReservationDetail>()
+                      .WithOne()
+                      .HasForeignKey(e => e.ReservationId);
             });
             modelBuilder.Entity<ReservationDetail>(entity =>
             {

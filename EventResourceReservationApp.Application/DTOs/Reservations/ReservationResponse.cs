@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventResourceReservationApp.Application.DTOs.ReservationDetails;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,6 @@ namespace EventResourceReservationApp.Application.DTOs.Reservations
         public decimal TotalAmount { get; set; }
         public int StatusId { get; set; }
         public string Status { get; set; } = string.Empty;
-        
+        public IEnumerable<ReservationDetailsResponse>? ReservationDetails { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                 .Include(r => r.Client) // Incluir el usuario que creó el recurso
                 .Include(r => r.Location) // Incluir la ubicación del recurso
                 .Include(r => r.Admin) 
+                .Include(r => r.ReservationDetail)
                 .FirstOrDefaultAsync(r => r.Id == id); // Filtrar por Id
         }
         public async Task Update(Reservation reservation)
