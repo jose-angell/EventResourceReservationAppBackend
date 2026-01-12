@@ -55,7 +55,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                     //    reservation.StartTime < end &&
                     //    reservation.EndTime > start
                     //)
-                    //.Sum(reservation => (int?)reservation.Quantity) ?? 0,
+                    //.Select(reservation => reservation.ReservationDetail),
                     CategoryId = resource.CategoryId,
                     CategoryName = resource.Category != null ? resource.Category.Name : "",
                     LocationId = resource.LocationId,

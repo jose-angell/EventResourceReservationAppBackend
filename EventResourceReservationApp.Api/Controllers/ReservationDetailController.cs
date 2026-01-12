@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EventResourceReservationApp.Api.Controllers
 {
     [ApiController]
-    [Route("api/reservationDetails")]
+    [Route("api/reservation-details")]
     public class ReservationDetailController : ControllerBase
     {
         private readonly ReadAllReservationDetailUseCase _readAll;
