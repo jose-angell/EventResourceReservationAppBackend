@@ -22,7 +22,7 @@ namespace EventResourceReservationApp.Domain
         public Guid CreatedByUserId { get; set; }
         public ApplicationUser? CreatedByUser { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<Reservation>? Reservations { get; set; }
+        public ICollection<ReservationDetail>? ReservationDetails { get; set; }
         public Resource()
         {
             Name = string.Empty;

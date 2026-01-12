@@ -28,14 +28,13 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                 .Include(r => r.Category) // Incluir la categoría del recurso
                 .FirstOrDefaultAsync(r => r.Id == id); // Filtrar por Id
         }
-        public async Task<IEnumerable<ResourceResponse?>> GetByIdAsync(Guid id, DateTime start, DateTime end)
+        public async Task<ResourceResponse?> GetByIdAsync(Guid id, DateTime start, DateTime end)
         {
             return await _context.Resources
                 .Include(r => r.CreatedByUser)
                 .Include(r => r.Location)
                 .Include(r => r.Category)
                 .Select(resource => new ResourceResponse
-                .FirstOrDefaultAsync(r => r.Id == id);
                 {
                     Id = resource.Id,
                     StatusId = resource.StatusId,
@@ -44,13 +43,13 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                     Description = resource.Description,
                     Price = resource.Price,
                     Quantity = resource.Quantity,
-                    QuantityInUse = 0, // Aquí debes implementar la lógica para calcular la cantidad en uso
-                    //QuantityInUse = resource.Reservations // Asumiendo que Resource tiene ICollection<Reservation>
-                    //.Where(reservation =>
-                    //    reservation.StartTime < end &&
-                    //    reservation.EndTime > start
-                    //)
-                    //.Select(reservation => reservation.ReservationDetail),
+                    QuantityInUse = resource.ReservationDetails
+                    .Where(rd =>
+                        rd.Reservation.StatusId == 1 &&            // 1. Solo reservas activas/confirmadas
+                        rd.Reservation.StartTime < end &&          // 2. Lógica de solapamiento de fechas
+                        rd.Reservation.EndTime > start
+                    )
+                    .Sum(rd => (int?)rd.Quantity) ?? 0,
                     CategoryId = resource.CategoryId,
                     CategoryName = resource.Category != null ? resource.Category.Name : "",
                     LocationId = resource.LocationId,
@@ -58,7 +57,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                     AuthorizationType = resource.AuthorizationType,
                     Created = resource.CreatedAt
                 })
-                
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
         public async Task UpdateAsync(Resource resource)
         {
@@ -95,13 +94,13 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                     Description = resource.Description,
                     Price = resource.Price,
                     Quantity = resource.Quantity,
-                    QuantityInUse = 0, // Aquí debes implementar la lógica para calcular la cantidad en uso
-                    //QuantityInUse = resource.Reservations // Asumiendo que Resource tiene ICollection<Reservation>
-                    //.Where(reservation =>
-                    //    reservation.StartTime < end &&
-                    //    reservation.EndTime > start
-                    //)
-                    //.Select(reservation => reservation.ReservationDetail),
+                    QuantityInUse = resource.ReservationDetails
+                    .Where(rd =>
+                        rd.Reservation.StatusId == 1 &&            // 1. Solo reservas activas/confirmadas
+                        rd.Reservation.StartTime < end &&          // 2. Lógica de solapamiento de fechas
+                        rd.Reservation.EndTime > start
+                    )
+                    .Sum(rd => (int?)rd.Quantity) ?? 0,
                     CategoryId = resource.CategoryId,
                     CategoryName = resource.Category != null ? resource.Category.Name : "",
                     LocationId = resource.LocationId,

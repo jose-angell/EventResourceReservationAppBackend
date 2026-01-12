@@ -24,7 +24,7 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
         {
             try
             {
-                var resource = await _unitOfWork.Resources.GetByIdAsync(filter: r => (r.Id == request.Id), request.StartTime,request.EndTime);
+                var resource = await _unitOfWork.Resources.GetByIdAsync(request.Id, request.StartTime,request.EndTime);
                 if (resource == null)
                 {
                     _logger.LogWarning($"Recurso con Id '{request.Id}' no encontrado.");
@@ -34,9 +34,6 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
                     $"La operación de busqueda falló debido a que no se encontró el recurso con Id '{request.Id}'."
                     );
                 }
-                // TODO: Calcular la cantidad en uso entre las fechas proporcionadas
-
-
                 
                 return OperationResult<ResourceResponse>.Success(resource, "Recurso encontrado exitosamente.");
             }
