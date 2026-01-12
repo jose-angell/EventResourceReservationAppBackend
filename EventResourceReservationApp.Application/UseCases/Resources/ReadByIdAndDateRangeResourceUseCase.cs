@@ -24,7 +24,7 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
         {
             try
             {
-                var resource = await _unitOfWork.Resources.GetByIdAsync(request.Id);
+                var resource = await _unitOfWork.Resources.GetByIdAsync(filter: r => (r.Id == request.Id), request.StartTime,request.EndTime);
                 if (resource == null)
                 {
                     _logger.LogWarning($"Recurso con Id '{request.Id}' no encontrado.");
@@ -37,24 +37,8 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
                 // TODO: Calcular la cantidad en uso entre las fechas proporcionadas
 
 
-                var response = new ResourceResponse
-                {
-                    Id = resource.Id,
-                    StatusId = resource.StatusId,
-                    StatusDescription = "",
-                    Name = resource.Name,
-                    Description = resource.Description,
-                    Price = resource.Price,
-                    Quantity = resource.Quantity,
-                    QuantityInUse = resource.Quantity, //resource.QuantityInUse,
-                    CategoryId = resource.CategoryId,
-                    CategoryName = resource.Category?.Name ?? "",
-                    LocationId = resource.LocationId,
-                    LocationDescription = resource.Location?.City ?? "",
-                    AuthorizationType = resource.AuthorizationType,
-                    Created = resource.CreatedAt
-                };
-                return OperationResult<ResourceResponse>.Success(response, "Recurso encontrado exitosamente.");
+                
+                return OperationResult<ResourceResponse>.Success(resource, "Recurso encontrado exitosamente.");
             }
             catch (PersistenceException pEx)
             {

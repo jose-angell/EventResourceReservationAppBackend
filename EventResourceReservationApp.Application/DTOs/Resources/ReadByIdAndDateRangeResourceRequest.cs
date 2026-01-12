@@ -11,8 +11,8 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
     {
         public Guid Id { get; set; }
         [Required(ErrorMessage = "La fecha de inicio es obligatoria.")]
-        public DateTime? StartTime { get; set; }
+        public DateTime StartTime { get; set; }
         [Required(ErrorMessage = "La fecha de fin es obligatoria.")]
-        public DateTime? EndTime { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }
