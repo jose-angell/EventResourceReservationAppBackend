@@ -9,7 +9,7 @@ namespace EventResourceReservationApp.Domain.Extensions
 {
     public static class ReservationStatusExtensions
     {
-        public static string GetDescription(this ReservationStatus status) => status switch
+        public static string GetDescription(this ReservationStatus statusId) => statusId switch
         {
             ReservationStatus.Pending => "Pendiente de aprobación",
             ReservationStatus.Confirmed => "Confirmada y reservada",
