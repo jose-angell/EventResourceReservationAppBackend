@@ -1,5 +1,6 @@
 ﻿using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.Repositories;
+using EventResourceReservationApp.Domain.Enums;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,6 @@ namespace EventResourceReservationApp.Application.DTOs.Reservations
     {
         public Guid Id { get; set; }
         public Guid TrasnsationId { get; set; }
-        public int StatusId { get; set; }
+        public ReservationStatus StatusId { get; set; }
     }
 }

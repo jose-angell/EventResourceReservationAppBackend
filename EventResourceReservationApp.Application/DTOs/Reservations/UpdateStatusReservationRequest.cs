@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventResourceReservationApp.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace EventResourceReservationApp.Application.DTOs.Reservations
         [Required(ErrorMessage = "EL Id de administrador es requerido")]
         public Guid AdminId { get; set; }
         [Required(ErrorMessage = "EL estatus es requerido")]
-        public int StatusId { get; set; }
+        public ReservationStatus StatusId { get; set; }
         public string? AdminComment { get; set; } = string.Empty;
     }
 }
