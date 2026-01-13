@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventResourceReservationApp.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace EventResourceReservationApp.Domain
         public Guid Id { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public int StatusId { get; set; }
+        public ReservationStatus StatusId { get; set; }
         public decimal TotalAmount { get; set; }
         public string ClientComment { get; set; }
         public string ClientPhoneNumber { get; set; }   

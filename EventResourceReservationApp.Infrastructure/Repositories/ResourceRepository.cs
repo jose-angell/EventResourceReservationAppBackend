@@ -69,13 +69,13 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
             var totalQuantity = await (from r in _context.Resources
                                  join rd in _context.ReservationDetails on r.Id equals rd.ResourceId
                                  join rs in _context.Reservations on rd.ReservationId equals rs.Id
-                                 where rs.StatusId == 1
+                                 where rs.StatusId == 1 && r.Id == id
                                  select rd.Quantity).SumAsync();
             /*
              * select sum(rd.Quantity) from Resource r 
              * inner join ReservationDetail rd on rd.ResourceId = r.Id
              * inner join Reservation rs on rs.Id = rd.ReservationId
-             * where rs.Status = 1 
+             * where rs.Status = 1 and r.Id = id
              */
             return totalQuantity > 0 ? true : false;
         }
