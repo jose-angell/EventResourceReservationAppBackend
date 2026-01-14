@@ -32,7 +32,16 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
             }
             try
             {
-                //TODO: Verificar si el recurso está asociado a reservas antes de eliminarlo.
+                var validarResource = await _unitOfWork.Resources.IsResourceInUse(resourceId);
+                if (validarResource)
+                {
+                    _logger.LogWarning($"Fallo al eliminar recurso: El recurso con Id '{resourceId}' se encuentra en uso.");
+                    return OperationResult.Failure(
+                       $"El recurso con Id '{resourceId}' se encuentra en uso.",
+                      "NotFound",
+                      $"La operación de eliminación falló debido a que el recurso con Id '{resourceId}' se encuentra en uso."
+                     );
+                }
                 await _unitOfWork.Resources.RemoveAsync(deleteResource);
                 await _unitOfWork.SaveAsync();
                 return OperationResult.Success("Recurso eliminado exitosamente.");  

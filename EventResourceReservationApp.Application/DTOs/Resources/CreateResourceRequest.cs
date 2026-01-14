@@ -1,4 +1,5 @@
 ﻿using EventResourceReservationApp.Domain;
+using EventResourceReservationApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,7 +27,7 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
         [Range(0.01, double.MaxValue, ErrorMessage = "El precio debe ser mayor que cero.")]
         public decimal Price { get; set; }
         [Required(ErrorMessage = "El tipo de autorización es obligatorio.")]
-        public int AuthorizationType { get; set; }
+        public ResourceAuthorizationType AuthorizationType { get; set; }
         [Required(ErrorMessage = "El ID de la ubicación es obligatorio.")]
         public int LocationId { get; set; }
         [Required(ErrorMessage = "El ID del usuario creador es obligatorio.")]

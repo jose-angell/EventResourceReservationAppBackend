@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventResourceReservationApp.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,6 +23,6 @@ namespace EventResourceReservationApp.Application.DTOs.Reservations
         public string ClientPhoneNumber { get; set; }
         [Required(ErrorMessage = "La ubicación es requerida")]
         public int LocationId { get; set; }
-        public int StatusId { get; set; }
+        public ReservationStatus StatusId { get; set; }
     }
 }

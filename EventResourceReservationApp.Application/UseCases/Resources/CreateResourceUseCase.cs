@@ -45,7 +45,7 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
                 var response = new ResourceResponse
                 {
                     Id = resource.Id,
-                    StatusId = resource.StatusId,
+                    StatusId = (int) resource.StatusId,
                     StatusDescription = "",
                     Name = resource.Name,
                     Description = resource.Description,
@@ -56,7 +56,7 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
                     CategoryName = "",
                     LocationId = resource.LocationId,
                     LocationDescription = "",
-                    AuthorizationType = resource.AuthorizationType,
+                    AuthorizationType = (int)resource.AuthorizationType,
                     Created = resource.CreatedAt
                 };
                 return OperationResult<ResourceResponse>.Success(response, "Recurso creado exitosamente.");

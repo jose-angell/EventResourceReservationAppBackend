@@ -2,6 +2,7 @@
 using EventResourceReservationApp.Application.DTOs.Resources;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
+using EventResourceReservationApp.Domain.Extensions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -47,8 +48,9 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
                 var resourceResponses = resources.Select(r => new ResourceResponse
                 {
                     Id = r.Id,
-                    StatusId = r.StatusId,
-                    StatusDescription =  "",
+                    StatusId = (int)r.StatusId,
+                    StatusName = r.StatusId.ToString(),
+                    StatusDescription =  r.StatusId.GetDescription(),
                     Name = r.Name,
                     Description = r.Description,
                     Price = r.Price,
@@ -58,7 +60,9 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
                     CategoryName = r.Category?.Name ?? "",
                     LocationId = r.LocationId,
                     LocationDescription = r.Location?.City ?? "",
-                    AuthorizationType = r.AuthorizationType,
+                    AuthorizationType = (int)r.AuthorizationType,
+                    AuthorizationTypeName = r.AuthorizationType.ToString(),
+                    AuthorizationTypeDescription = r.AuthorizationType.GetDescription(),
                     Created = r.CreatedAt
                 });
                 return OperationResult<IEnumerable<ResourceResponse>>.Success(resourceResponses, "Recursos obtenidos exitosamente.");

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventResourceReservationApp.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,25 +12,25 @@ namespace EventResourceReservationApp.Domain
         public Guid Id { get; set; }
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
-        public int StatusId { get; set; }
+        public ResourceStatus StatusId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-        public int AuthorizationType { get; set; }
+        public ResourceAuthorizationType AuthorizationType { get; set; }
         public int LocationId { get; set; }
         public Location? Location { get; set; }
         public Guid CreatedByUserId { get; set; }
         public ApplicationUser? CreatedByUser { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<Reservation>? Reservations { get; set; }
+        public ICollection<ReservationDetail>? ReservationDetails { get; set; }
         public Resource()
         {
             Name = string.Empty;
             Description = string.Empty;
         }
         public Resource(int categoryId, string name, string description, int quantity, decimal price,
-            int authorizationType, int locationId, Guid createdByUserId)
+            ResourceAuthorizationType authorizationType, int locationId, Guid createdByUserId)
         {
             if (categoryId == 0)
             {
@@ -65,7 +66,7 @@ namespace EventResourceReservationApp.Domain
             }
 
             CategoryId = categoryId;
-            StatusId = 1;
+            StatusId = ResourceStatus.Disponible;
             Name = name;
             Description = description;
             Quantity = quantity;
@@ -75,8 +76,8 @@ namespace EventResourceReservationApp.Domain
             CreatedByUserId = createdByUserId;
             CreatedAt = DateTime.UtcNow;
         }
-        public void Update(int categoryId, int statud, string name, string description, int quantity, decimal price,
-            int authorizationType, int locationId)
+        public void Update(int categoryId, ResourceStatus statusId, string name, string description, int quantity, decimal price,
+            ResourceAuthorizationType authorizationType, int locationId)
         {
             if (categoryId == 0)
             {
@@ -106,12 +107,12 @@ namespace EventResourceReservationApp.Domain
             {
                 throw new ArgumentException("LocationId cannot be empty.", nameof(locationId));
             }
-            if (statud < 0)
+            if (statusId < 0)
             {
-                throw new ArgumentException("StatusId cannot be negative.", nameof(statud));
+                throw new ArgumentException("StatusId cannot be negative.", nameof(statusId));
             }
             CategoryId = categoryId;
-            StatusId = statud;
+            StatusId = statusId;
             Name = name;
             Description = description;
             Quantity = quantity;

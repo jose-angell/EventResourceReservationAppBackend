@@ -20,7 +20,8 @@ namespace EventResourceReservationApp.Application.DTOs.Reservations
         public int Quantity { get; set; }
         public decimal TotalAmount { get; set; }
         public int StatusId { get; set; }
-        public string Status { get; set; } = string.Empty;
+        public string StatusName { get; set; } = string.Empty;
+        public string StatusDescription { get; set; } = string.Empty;
         public IEnumerable<ReservationDetailsResponse>? ReservationDetails { get; set; }
     }
 }

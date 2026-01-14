@@ -12,6 +12,8 @@ namespace EventResourceReservationApp.Application.Repositories
     public interface IResourceRepository: IRepository<Resource>
     {
         Task<Resource> GetByIdAsync(Guid id);
+        Task<ResourceResponse?> GetByIdAsync(Guid id, DateTime start, DateTime end);
+        Task<bool> IsResourceInUse(Guid id);
         Task UpdateAsync(Resource resource);
         Task<IEnumerable<ResourceResponse?>> GetAllAsync(Expression<Func<Resource, bool>> filter, DateTime star, DateTime end);
     }

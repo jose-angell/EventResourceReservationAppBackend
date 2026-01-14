@@ -10,6 +10,7 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
     {
         public Guid Id { get; set; }
         public int StatusId { get; set; }
+        public string StatusName { get; set; }
         public string StatusDescription { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -22,6 +23,8 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
         public int LocationId { get; set; }
         public string LocationDescription { get; set; }
         public int AuthorizationType { get; set; }
+        public string AuthorizationTypeName { get; set; }
+        public string AuthorizationTypeDescription { get; set; }
         public DateTime Created { get; set; }
 
     }

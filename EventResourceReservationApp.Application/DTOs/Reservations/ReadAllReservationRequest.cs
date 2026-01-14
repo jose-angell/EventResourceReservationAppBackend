@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventResourceReservationApp.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace EventResourceReservationApp.Application.DTOs.Reservations
     {
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-        public int? StatusId { get; set; }
+        public ReservationStatus? StatusId { get; set; }
         public int? LocationId { get; set; }
         public Guid? CreatedByUserIdFilter { get; set; }
         public string? OrderBy { get; set; }

@@ -1,4 +1,5 @@
 ﻿using EventResourceReservationApp.Domain;
+using EventResourceReservationApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +16,7 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
         [Required(ErrorMessage = "El ID de la categoría es obligatorio.")]
         public int CategoryId { get; set; }
         [Required(ErrorMessage = "El ID del estado es obligatorio.")]
-        public int StatusId { get; set; }
+        public ResourceStatus StatusId { get; set; }
         [Required(ErrorMessage = "El nombre es obligatorio.")]
         public string Name { get; set; }
         [Required(ErrorMessage = "La descripción es obligatoria.")]
@@ -25,7 +26,7 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
         [Required(ErrorMessage = "El precio es obligatorio.")]
         public decimal Price { get; set; }
         [Required(ErrorMessage = "El tipo de autorización es obligatorio.")]
-        public int AuthorizationType { get; set; }
+        public ResourceAuthorizationType AuthorizationType { get; set; }
         [Required(ErrorMessage = "El ID de la ubicación es obligatorio.")]
         public int LocationId { get; set; }
        

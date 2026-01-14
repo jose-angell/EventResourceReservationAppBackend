@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventResourceReservationApp.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace EventResourceReservationApp.Domain
         public Guid Id { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public int StatusId { get; set; }
+        public ReservationStatus StatusId { get; set; }
         public decimal TotalAmount { get; set; }
         public string ClientComment { get; set; }
         public string ClientPhoneNumber { get; set; }   
@@ -56,7 +57,7 @@ namespace EventResourceReservationApp.Domain
             }
             StartTime = startTime;
             EndTime = endTime;
-            StatusId = 1;
+            StatusId = ReservationStatus.Pending;
             TotalAmount = totalAmount;
             ClientComment = clientComment ?? string.Empty;
             ClientPhoneNumber = clientPhoneNumber;
@@ -65,7 +66,7 @@ namespace EventResourceReservationApp.Domain
             AdminComment = string.Empty;
             CreatedAt = DateTime.UtcNow;
         }
-        public void Update(DateTime startTime, DateTime endTime, int statusId, decimal totalAmount,
+        public void Update(DateTime startTime, DateTime endTime, ReservationStatus statusId, decimal totalAmount,
             string clientComment, string clientPhoneNumber, int locationId)
         {
             if (startTime >= endTime)
@@ -96,7 +97,7 @@ namespace EventResourceReservationApp.Domain
             ClientPhoneNumber = clientPhoneNumber;
             LocationId = locationId;
         }
-        public void UpdateStatus(int statusId, Guid adminId, string adminComment)
+        public void UpdateStatus(ReservationStatus statusId, Guid adminId, string adminComment)
         {
             if (statusId <= 0)
             {
@@ -110,7 +111,7 @@ namespace EventResourceReservationApp.Domain
             AdminId = adminId;
             AdminComment = adminComment ?? string.Empty;
         }
-        public void UpdateTransaction(int statusId, Guid transactionId)
+        public void UpdateTransaction(ReservationStatus statusId, Guid transactionId)
         {
             if (statusId <= 0)
             {
