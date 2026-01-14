@@ -17,7 +17,7 @@ namespace EventResourceReservationApp.Domain
         public string Description { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-        public int AuthorizationType { get; set; }
+        public ResourceAuthorizationType AuthorizationType { get; set; }
         public int LocationId { get; set; }
         public Location? Location { get; set; }
         public Guid CreatedByUserId { get; set; }
@@ -30,7 +30,7 @@ namespace EventResourceReservationApp.Domain
             Description = string.Empty;
         }
         public Resource(int categoryId, string name, string description, int quantity, decimal price,
-            int authorizationType, int locationId, Guid createdByUserId)
+            ResourceAuthorizationType authorizationType, int locationId, Guid createdByUserId)
         {
             if (categoryId == 0)
             {
@@ -77,7 +77,7 @@ namespace EventResourceReservationApp.Domain
             CreatedAt = DateTime.UtcNow;
         }
         public void Update(int categoryId, ResourceStatus statusId, string name, string description, int quantity, decimal price,
-            int authorizationType, int locationId)
+            ResourceAuthorizationType authorizationType, int locationId)
         {
             if (categoryId == 0)
             {

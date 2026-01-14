@@ -3,6 +3,7 @@ using EventResourceReservationApp.Application.DTOs.ReservationDetails;
 using EventResourceReservationApp.Application.DTOs.Reservations;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
+using EventResourceReservationApp.Domain.Extensions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -49,8 +50,9 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
                     EndTime = r.EndTime,
                     Quantity = r.ReservationDetail?.Count() ?? 0, 
                     TotalAmount = r.TotalAmount,
-                    StatusId = r.StatusId,
-                    Status = "",
+                    StatusId = (int)r.StatusId,
+                    StatusName = r.StatusId.ToString(),
+                    StatusDescription = r.StatusId.GetDescription(),
                     ReservationDetails = r.ReservationDetail?.Select(rd => new ReservationDetailsResponse
                     {
                         Id = rd.Id,

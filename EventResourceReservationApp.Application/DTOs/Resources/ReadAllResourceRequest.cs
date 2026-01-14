@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventResourceReservationApp.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace EventResourceReservationApp.Application.DTOs.Resources
         [Required(ErrorMessage = "La fecha de fin es obligatoria.")]
         public DateTime? EndTime { get; set; }
         public int? CategoryId { get; set; }
-        public int? StatusId { get; set; }
+        public ResourceStatus? StatusId { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
         public Guid? CreatedByUserIdFilter { get; set; }

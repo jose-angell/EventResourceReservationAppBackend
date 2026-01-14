@@ -1,6 +1,7 @@
 ﻿using EventResourceReservationApp.Application.Common;
 using EventResourceReservationApp.Application.DTOs.Resources;
 using EventResourceReservationApp.Application.Repositories;
+using EventResourceReservationApp.Domain.Extensions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -39,8 +40,9 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
                 var response = new ResourceResponse
                 {
                     Id = resource.Id,
-                    StatusId = resource.StatusId,
-                    StatusDescription = "",
+                    StatusId = (int)resource.StatusId,
+                    StatusName = resource.StatusId.ToString(),
+                    StatusDescription = resource.StatusId.GetDescription(),
                     Name = resource.Name,
                     Description = resource.Description,
                     Price = resource.Price,
@@ -50,7 +52,9 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
                     CategoryName = resource.Category?.Name ?? "",
                     LocationId = resource.LocationId,
                     LocationDescription = resource.Location?.City ?? "",
-                    AuthorizationType = resource.AuthorizationType,
+                    AuthorizationType = (int)resource.AuthorizationType,
+                    AuthorizationTypeName = resource.AuthorizationType.ToString(),
+                    AuthorizationTypeDescription = resource.AuthorizationType.GetDescription(),
                     Created = resource.CreatedAt
                 };
                 return OperationResult<ResourceResponse>.Success(response, "Recurso encontrado exitosamente.");
