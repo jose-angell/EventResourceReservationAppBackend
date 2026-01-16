@@ -43,7 +43,7 @@ namespace EventResourceReservationApp.Application.UseCases.ReservationDetails
                     ResourceName = reservationDetail.Resource?.Name,
                     Quantity = reservationDetail.Quantity,
                     UnitPrice = reservationDetail.UnitPrice,
-                    TotalPrice = reservationDetail.Quantity * r.UnitPrice,
+                    TotalPrice = reservationDetail.Quantity * reservationDetail.UnitPrice,
                     Created = reservationDetail.Created
                 };
                 return OperationResult<ReservationDetailsResponse>.Success(response, "Detalle de reserva consultada exitosamente.");

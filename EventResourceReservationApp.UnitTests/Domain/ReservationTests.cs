@@ -43,10 +43,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             string clientPhoneNumber = "3124512";
             int locationId = 1;
 
-            //Act
-            var reservation = new Reservation(startTime, endTime, totalAmount, clientComment, clientPhoneNumber, locationId, clientId);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => new Reservation(startTime, endTime, totalAmount, clientComment, clientPhoneNumber, locationId, clientId));
         }
         [Fact]
@@ -61,10 +58,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             string clientPhoneNumber = "3124512";
             int locationId = 1;
 
-            //Act
-            var reservation = new Reservation(startTime, endTime, totalAmount, clientComment, clientPhoneNumber, locationId, clientId);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => new Reservation(startTime, endTime, totalAmount, clientComment, clientPhoneNumber, locationId, clientId));
         }
 
@@ -82,10 +76,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             string clientComment = "commentClient";
             int locationId = 1;
 
-            //Act
-            var reservation = new Reservation(startTime, endTime, totalAmount, clientComment, clientPhoneNumber, locationId, clientId);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => new Reservation(startTime, endTime, totalAmount, clientComment, clientPhoneNumber, locationId, clientId));
         }
 
@@ -101,10 +92,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             string clientPhoneNumber = "3124512";
             int locationId = 0;
 
-            //Act
-            var reservation = new Reservation(startTime, endTime, totalAmount, clientComment, clientPhoneNumber, locationId, clientId);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => new Reservation(startTime, endTime, totalAmount, clientComment, clientPhoneNumber, locationId, clientId));
         }
 
@@ -120,10 +108,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             string clientPhoneNumber = "3124512";
             int locationId = 1;
 
-            //Act
-            var reservation = new Reservation(startTime, endTime, totalAmount, clientComment, clientPhoneNumber, locationId, clientId);
-
-           // Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => new Reservation(startTime, endTime, totalAmount, clientComment, clientPhoneNumber, locationId, clientId));
         }
 
@@ -168,10 +153,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             var newClientPhoneNumber = "567890";
             int newLocationId = 2;
 
-            //Act
-            reservation.Update(newStartTime, newEndTime, newStatusId, newTotalAmount, newClientComment, newClientPhoneNumber, newLocationId);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => reservation.Update(newStartTime, newEndTime, newStatusId, newTotalAmount, newClientComment, newClientPhoneNumber, newLocationId));
 
         }
@@ -191,10 +173,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             var newClientComment = "newCommentClient";
             int newLocationId = 2;
 
-            //Act
-            reservation.Update(newStartTime, newEndTime, newStatusId, newTotalAmount, newClientComment, newClientPhoneNumber, newLocationId);
-
-            //Assert
+            //Act and Assert
             Assert.Throws<ArgumentException>(() => reservation.Update(newStartTime, newEndTime, newStatusId, newTotalAmount, newClientComment, newClientPhoneNumber, newLocationId));
 
         }
@@ -213,10 +192,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             var newClientPhoneNumber = "567890";
             int newLocationId = 0;
 
-            //Act
-            reservation.Update(newStartTime, newEndTime, newStatusId, newTotalAmount, newClientComment, newClientPhoneNumber, newLocationId);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => reservation.Update(newStartTime, newEndTime, newStatusId, newTotalAmount, newClientComment, newClientPhoneNumber, newLocationId));
 
         }
@@ -235,10 +211,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             var newClientPhoneNumber = "567890";
             int newLocationId = 2;
 
-            //Act
-            reservation.Update(newStartTime, newEndTime, newStatusId, newTotalAmount, newClientComment, newClientPhoneNumber, newLocationId);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => reservation.Update(newStartTime, newEndTime, newStatusId, newTotalAmount, newClientComment, newClientPhoneNumber, newLocationId));
 
         }
@@ -269,10 +242,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             string adminComment = "adminComment";
             var newStatusId = (ReservationStatus)0;
 
-            //Act
-            reservation.UpdateStatus(newStatusId, adminId, adminComment);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => reservation.UpdateStatus(newStatusId, adminId, adminComment));
 
         }
@@ -286,10 +256,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             string adminComment = "adminComment";
             var newStatusId = ReservationStatus.Confirmed;
 
-            //Act
-            reservation.UpdateStatus(newStatusId, adminId, adminComment);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => reservation.UpdateStatus(newStatusId, adminId, adminComment));
 
         }
@@ -319,10 +286,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             Guid transationId = Guid.NewGuid();
             var newStatusId = (ReservationStatus)0;
 
-            //Act
-            reservation.UpdateTransaction(newStatusId, transationId);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => reservation.UpdateTransaction(newStatusId, transationId));
 
         }
@@ -335,10 +299,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             Guid transationId = Guid.Empty;
             var newStatusId = ReservationStatus.Confirmed;
 
-            //Act
-            reservation.UpdateTransaction(newStatusId, transationId);
-
-            //Assert
+            //Act  and Assert
             Assert.Throws<ArgumentException>(() => reservation.UpdateTransaction(newStatusId, transationId));
 
         }
