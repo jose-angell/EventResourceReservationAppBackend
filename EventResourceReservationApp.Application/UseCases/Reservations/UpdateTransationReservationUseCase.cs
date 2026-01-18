@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace EventResourceReservationApp.Application.UseCases.Reservations
 {
-    public class UpdateTransationReservationUseCase
+    public class UpdateTransactionReservationUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<UpdateTransationReservationUseCase> _logger;
-        public UpdateTransationReservationUseCase(IUnitOfWork unitOfWork, ILogger<UpdateTransationReservationUseCase> logger)
+        private readonly ILogger<UpdateTransactionReservationUseCase> _logger;
+        public UpdateTransactionReservationUseCase(IUnitOfWork unitOfWork, ILogger<UpdateTransactionReservationUseCase> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
-        public async Task<OperationResult> ExecuteAsync(UpdateTransationReservationRequest request)
+        public async Task<OperationResult> ExecuteAsync(UpdateTransactionReservationRequest request)
         {
             try
             {

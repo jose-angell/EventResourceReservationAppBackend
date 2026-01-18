@@ -16,7 +16,7 @@ namespace EventResourceReservationApp.Api.Controllers
         private readonly DeleteReservationUseCase _delete;
         private readonly UpdateReservationUseCase _update;
         private readonly UpdateStatusReservationUseCase _updateStatus;
-        private readonly UpdateTransationReservationUseCase _updateTransaction;
+        private readonly UpdateTransactionReservationUseCase _updateTransaction;
 
         public ReservationController(
             CreateReservationUseCase create,
@@ -25,7 +25,7 @@ namespace EventResourceReservationApp.Api.Controllers
             DeleteReservationUseCase delete,
             UpdateReservationUseCase update,
             UpdateStatusReservationUseCase updateStatus,
-            UpdateTransationReservationUseCase updateTransaction)
+            UpdateTransactionReservationUseCase updateTransaction)
         {
             _create = create;
             _readAll = readAll;
@@ -115,7 +115,7 @@ namespace EventResourceReservationApp.Api.Controllers
             return this.HandleOperationError(result);
         }
         [HttpPut("transation/{id}")]
-        public async Task<IActionResult> UpdateTransationReservation([FromRoute] Guid id, [FromBody] UpdateTransationReservationRequest request)
+        public async Task<IActionResult> UpdateTransationReservation([FromRoute] Guid id, [FromBody] UpdateTransactionReservationRequest request)
         {
             if (id == Guid.Empty)
             {
