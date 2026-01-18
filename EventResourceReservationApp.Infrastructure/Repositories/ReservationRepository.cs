@@ -26,7 +26,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                 .Include(r => r.ReservationDetail)
                 .FirstOrDefaultAsync(r => r.Id == id); // Filtrar por Id
         }
-        public async Task Update(Reservation reservation)
+        public async Task UpdateAsync(Reservation reservation)
         {
             _context.Reservations.Update(reservation);
             await Task.CompletedTask;

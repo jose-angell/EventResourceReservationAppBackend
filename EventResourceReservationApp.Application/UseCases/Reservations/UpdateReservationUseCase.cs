@@ -36,7 +36,7 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
                 }
                 updateReservation.Update(request.StartTime, request.EndTime,request.StatusId, request.TotalAmount,
                     request.ClientComment, request.ClientPhoneNumber, request.LocationId);
-                await _unitOfWork.Reservations.Update(updateReservation);
+                await _unitOfWork.Reservations.UpdateAsync(updateReservation);
                 await _unitOfWork.SaveAsync();
                 return OperationResult.Success("Reserva editada exitosamente.");
             }
@@ -45,7 +45,7 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
                 _logger.LogWarning(argEx, "Fallo al editar la reservacion debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
                 return OperationResult.Failure(
                     "Argumentos inválidos proporcionados para editar la reservación.",
-                    "BadRequest",
+                    "InvalidInput",
                     argEx.Message
                 );
             }
