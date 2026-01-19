@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace EventResourceReservationApp.Application.UseCases.Reservations
 {
-    public class UpdateTransationReservationUseCase
+    public class UpdateTransactionReservationUseCase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<UpdateTransationReservationUseCase> _logger;
-        public UpdateTransationReservationUseCase(IUnitOfWork unitOfWork, ILogger<UpdateTransationReservationUseCase> logger)
+        private readonly ILogger<UpdateTransactionReservationUseCase> _logger;
+        public UpdateTransactionReservationUseCase(IUnitOfWork unitOfWork, ILogger<UpdateTransactionReservationUseCase> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
-        public async Task<OperationResult> ExecuteAsync(UpdateTransationReservationRequest request)
+        public async Task<OperationResult> ExecuteAsync(UpdateTransactionReservationRequest request)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
                     );
                 }
                 updateReservation.UpdateTransaction(request.StatusId,request.TrasnsationId);
-                await _unitOfWork.Reservations.Update(updateReservation);
+                await _unitOfWork.Reservations.UpdateAsync(updateReservation);
                 await _unitOfWork.SaveAsync();
                 return OperationResult.Success("Reserva editada exitosamente.");
             }
@@ -43,7 +43,7 @@ namespace EventResourceReservationApp.Application.UseCases.Reservations
                 _logger.LogWarning(argEx, "Fallo al editar la reservacion debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
                 return OperationResult.Failure(
                     "Argumentos inválidos proporcionados para editar la reservación.",
-                    "BadRequest",
+                    "InvalidInput",
                     argEx.Message
                 );
             }

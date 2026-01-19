@@ -66,7 +66,7 @@ namespace EventResourceReservationApp.Api
             services.AddTransient<ReadByIdReservationUseCase>();
             services.AddTransient<UpdateReservationUseCase>();
             services.AddTransient<UpdateStatusReservationUseCase>();
-            services.AddTransient<UpdateTransationReservationUseCase>();
+            services.AddTransient<UpdateTransactionReservationUseCase>();
             services.AddTransient<DeleteReservationUseCase>();
 
             // Reservation Details

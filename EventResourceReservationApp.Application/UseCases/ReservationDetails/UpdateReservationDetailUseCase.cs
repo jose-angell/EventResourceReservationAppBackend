@@ -44,7 +44,7 @@ namespace EventResourceReservationApp.Application.UseCases.ReservationDetails
                 _logger.LogWarning(argEx, "Fallo al editar el detalle de la reservacion debido a argumentos inválidos: {ErrorMessage}", argEx.Message);
                 return OperationResult.Failure(
                     "Argumentos inválidos proporcionados para editar el detalle de la reservación.",
-                    "BadRequest",
+                    "InvalidInput",
                     argEx.Message
                 );
             }

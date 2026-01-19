@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EventResourceReservationApp.Application.DTOs.Reservations
 {
-    public class UpdateTransationReservationRequest
+    public class UpdateTransactionReservationRequest
     {
         public Guid Id { get; set; }
         public Guid TrasnsationId { get; set; }

@@ -1,6 +1,8 @@
 ﻿using EventResourceReservationApp.Application.DTOs.Resources;
 using EventResourceReservationApp.Application.Repositories;
 using EventResourceReservationApp.Domain;
+using EventResourceReservationApp.Domain.Enums;
+using EventResourceReservationApp.Domain.Extensions;
 using EventResourceReservationApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -37,15 +39,16 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                 .Select(resource => new ResourceResponse
                 {
                     Id = resource.Id,
-                    StatusId = resource.StatusId,
-                    StatusDescription = "",
+                    StatusId = (int)resource.StatusId,
+                    StatusName = resource.StatusId.ToString(),
+                    StatusDescription = resource.StatusId.GetDescription(),
                     Name = resource.Name,
                     Description = resource.Description,
                     Price = resource.Price,
                     Quantity = resource.Quantity,
                     QuantityInUse = resource.ReservationDetails
                     .Where(rd =>
-                        rd.Reservation.StatusId == 1 &&            // 1. Solo reservas activas/confirmadas
+                        rd.Reservation.StatusId == ReservationStatus.Confirmed &&            // 1. Solo reservas activas/confirmadas
                         rd.Reservation.StartTime < end &&          // 2. Lógica de solapamiento de fechas
                         rd.Reservation.EndTime > start
                     )
@@ -54,7 +57,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                     CategoryName = resource.Category != null ? resource.Category.Name : "",
                     LocationId = resource.LocationId,
                     LocationDescription = resource.Location != null ? resource.Location.City : "",
-                    AuthorizationType = resource.AuthorizationType,
+                    AuthorizationType = (int)resource.AuthorizationType,
                     Created = resource.CreatedAt
                 })
                 .FirstOrDefaultAsync(r => r.Id == id);
@@ -69,7 +72,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
             var totalQuantity = await (from r in _context.Resources
                                  join rd in _context.ReservationDetails on r.Id equals rd.ResourceId
                                  join rs in _context.Reservations on rd.ReservationId equals rs.Id
-                                 where rs.StatusId == 1 && r.Id == id
+                                 where rs.StatusId == ReservationStatus.Confirmed && r.Id == id
                                  select rd.Quantity).SumAsync();
             /*
              * select sum(rd.Quantity) from Resource r 
@@ -88,15 +91,16 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                 .Select(resource => new ResourceResponse
                 {
                     Id = resource.Id,
-                    StatusId = resource.StatusId,
-                    StatusDescription = "",
+                    StatusId = (int)resource.StatusId,
+                    StatusName = resource.StatusId.ToString(),
+                    StatusDescription = resource.StatusId.GetDescription(),
                     Name = resource.Name,
                     Description = resource.Description,
                     Price = resource.Price,
                     Quantity = resource.Quantity,
                     QuantityInUse = resource.ReservationDetails
                     .Where(rd =>
-                        rd.Reservation.StatusId == 1 &&            // 1. Solo reservas activas/confirmadas
+                        rd.Reservation.StatusId == ReservationStatus.Confirmed &&            // 1. Solo reservas activas/confirmadas
                         rd.Reservation.StartTime < end &&          // 2. Lógica de solapamiento de fechas
                         rd.Reservation.EndTime > start
                     )
@@ -105,7 +109,7 @@ namespace EventResourceReservationApp.Infrastructure.Repositories
                     CategoryName = resource.Category != null ? resource.Category.Name : "",
                     LocationId = resource.LocationId,
                     LocationDescription = resource.Location != null ? resource.Location.City : "",
-                    AuthorizationType = resource.AuthorizationType,
+                    AuthorizationType = (int)resource.AuthorizationType,
                     Created = resource.CreatedAt
                 })
                 .ToListAsync();
