@@ -50,7 +50,7 @@ namespace EventResourceReservationApp.Domain
             }
             if (price < 0)
             {
-                throw new ArgumentException("UnitPrice cannot be negative.", nameof(price));
+                throw new ArgumentException("Price cannot be negative.", nameof(price));
             }
             if (authorizationType < 0)
             {

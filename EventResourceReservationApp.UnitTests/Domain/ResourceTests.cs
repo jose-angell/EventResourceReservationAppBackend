@@ -69,7 +69,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             var exception = Assert.Throws<ArgumentException>(() => new EventResourceReservationApp.Domain.Resource(
                 categoryId, name, description, quantity, price,
                 authorizationType, locationId, createdByUserId));
-            Assert.Equal("AvailableQuantity cannot be null or empty. (Parameter 'quantity')", exception.Message);
+            Assert.Equal("AvailableQuantity cannot be negative. (Parameter 'quantity')", exception.Message);
         }
         [Fact]
         public void Constructor_WithEmptyCreatedByUserId_ShouldThrowArgumentException()
@@ -133,7 +133,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             string name = "Projector";
             string description = "HD Projector";
             int quantity = 5; 
-            decimal price = 0.00m;
+            decimal price = -1m;
             ResourceAuthorizationType authorizationType = ResourceAuthorizationType.Automatico;
             int locationId = 2;
             Guid createdByUserId = Guid.NewGuid();
@@ -141,7 +141,7 @@ namespace EventResourceReservationApp.UnitTests.Domain
             var exception = Assert.Throws<ArgumentException>(() => new EventResourceReservationApp.Domain.Resource(
                 categoryId, name, description, quantity, price,
                 authorizationType, locationId, createdByUserId));
-            Assert.Equal("AvailableQuantity cannot be null or empty. (Parameter 'quantity')", exception.Message);
+            Assert.Equal("Price cannot be negative. (Parameter 'price')", exception.Message);
         }
         [Fact]
         public void Constructor_WithEmptyAuthorizationType_ShouldThrowArgumentException()
@@ -152,14 +152,14 @@ namespace EventResourceReservationApp.UnitTests.Domain
             string description = "HD Projector";
             int quantity = 5;
             decimal price = 150.00m;
-            ResourceAuthorizationType authorizationType = (ResourceAuthorizationType)0;// Invalid
+            ResourceAuthorizationType authorizationType = (ResourceAuthorizationType)(-1);// Invalid
             int locationId = 2;
             Guid createdByUserId = Guid.NewGuid(); 
             // Act & Assert
             var exception = Assert.Throws<ArgumentException>(() => new EventResourceReservationApp.Domain.Resource(
                 categoryId, name, description, quantity, price,
                 authorizationType, locationId, createdByUserId));
-            Assert.Equal("AuthorizationType cannot be empty. (Parameter 'authorizationType')", exception.Message);
+            Assert.Equal("AuthorizationType cannot be negative. (Parameter 'authorizationType')", exception.Message);
         }
         [Fact]
         public void Constructor_WithInvalidLocationId_ShouldThrowArgumentException()
