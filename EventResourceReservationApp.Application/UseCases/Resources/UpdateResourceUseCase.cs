@@ -52,9 +52,9 @@ namespace EventResourceReservationApp.Application.UseCases.Resources
             {
                 _logger.LogWarning(argEx, $"Error de argumento al actualizar recurso con Id '{request.Id}': {argEx.Message}");
                 return OperationResult.Failure(
-                    argEx.Message,
+                    $"La operación de actualización falló debido a un error de argumento para el recurso con Id '{request.Id}'.",
                     "InvalidInput",
-                    $"La operación de actualización falló debido a un error de argumento para el recurso con Id '{request.Id}'."
+                    argEx.Message
                 );
             } catch (PersistenceException pEx)
             {
